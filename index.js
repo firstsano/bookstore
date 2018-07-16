@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import TextBox from './src/TextBox';
+import Price from './src/Price';
 
 import products from './src/constants/Products';
 const product = products[0];
 
 ReactDOM.render(
-    <TextBox> {product.title} </TextBox>,
+    <div>
+        {product.title} :
+        <Price currency='руб.'> {product.price} </Price>
+    </div>,
     document.getElementById('root')
 );
