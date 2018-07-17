@@ -1,19 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import ProductCard from './src/ProductCard';
+import Catalog from './src/Catalog';
 
 import products from './src/constants/Products';
 
-const productCards = products.map((product) => {
-    return (
-        <div className="col s3">
-            <ProductCard product={product} />
-        </div>
-    );
-});
+const productsList = products.map((product) => ({
+    imageUrl: product.imageUrl,
+    text: product.title
+}));
 
 ReactDOM.render(
-    <div className="row"> {productCards} </div>,
+    <Catalog products={productsList} />,
     document.getElementById('root')
 );
