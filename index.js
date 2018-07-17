@@ -1,16 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Catalog from './src/Catalog';
-
-import products from './src/constants/Products';
-
-const productsList = products.map((product) => ({
-    imageUrl: product.imageUrl,
-    text: product.title
-}));
+import CatalogPage from './src/CatalogPage';
 
 ReactDOM.render(
-    <Catalog products={productsList} />,
+    <CatalogPage />,
     document.getElementById('root')
 );
