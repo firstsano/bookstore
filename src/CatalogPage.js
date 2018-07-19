@@ -4,13 +4,9 @@ import products from './constants/Products';
 import Catalog from './Catalog';
 
 class CatalogPage extends Component {
-    constructor() {
-        super(arguments);
-        const productList = products.map((product) => ({
-            imageUrl: product.imageUrl,
-            text: product.title
-        }));
-        this.state = { products: productList };
+    constructor(props) {
+        super(props);
+        this.state = { products };
     }
 
     render() {

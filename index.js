@@ -1,9 +1,12 @@
+import 'typeface-roboto';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import App from './src/App';
 import CatalogPage from './src/CatalogPage';
 
 ReactDOM.render(
-    <CatalogPage />,
+    <App> <CatalogPage /> </App>,
     document.getElementById('root')
 );
