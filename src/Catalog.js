@@ -17,7 +17,7 @@ class Catalog extends Component {
     render() {
         const { products, classes } = this.props;
         const productsList = products.map((product, index) =>
-            <Grid item component='li' className={classes.listItem} key={index} xs={6}>
+            <Grid item component='li' className={classes.listItem} key={product.id} xs={4}>
                 <ProductCard product={product} />
             </Grid>
         );

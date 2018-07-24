@@ -3,25 +3,25 @@ const products = [
         id: 1,
         title: 'Harry Potter and the Philosopher\'s Stone',
         price: 300,
-        imageUrl: 'https://m.media-amazon.com/images/M/MV5BNjQ3NWNlNmQtMTE5ZS00MDdmLTlkZjUtZTBlM2UxMGFiMTU3XkEyXkFqcGdeQXVyNjUwNzk3NDc@._V1_UY1200_CR90,0,630,1200_AL_.jpg'
+        imageUrl: 'https://best-wallpaper.net/wallpaper/1600x900/1106/Emma-Watson-in-Harry-Potter-7_1600x900.jpg'
     },
     {
         id: 2,
         title: 'Harry Potter and the Chamber of Secrets',
         price: 350,
-        imageUrl: 'http://antwerp.carpediem.cd/data/afisha/o/d3/65/d365c96f6e.jpg'
+        imageUrl: 'http://www.loseternautas.com/wp-content/uploads/2011/07/Harry-Potter-and-the-Deathly-Hallows-Part-II_1366x768.jpg'
     },
     {
         id: 3,
         title: 'Harry Potter and the Prisoner of Azkaban',
         price: 330,
-        imageUrl: 'https://hpmedia.bloomsbury.com/rep/s/9780747560777_309834.jpeg'
+        imageUrl: 'https://www.10wallpaper.com/wallpaper/1920x1080/1108/Harry_Potter_7_-_Professor_Snape_Wallpaper_1920x1080.jpg'
     },
     {
         id: 4,
         title: 'Harry Potter and the Goblet of Fire',
         price: 450,
-        imageUrl: 'https://vignette.wikia.nocookie.net/harrypotter/images/b/b8/Harry_potter_and_the_goblet_of_fire_ver5.jpg/revision/latest?cb=20101209150120'
+        imageUrl: 'http://licreatura.com/wp-content/uploads/2016/06/harry-potter-wallpaper-22.jpg'
     }
 ];
 

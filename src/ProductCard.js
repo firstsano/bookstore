@@ -23,7 +23,12 @@ const styles = {
 class ProductCard extends Component {
     render() {
         const { product, classes } = this.props;
-        const avatar = <Avatar> <Image  src={product.imageUrl} width="100%" height="100%" /> </Avatar>;
+        const avatar = <Avatar>
+            <Image
+                src={product.imageUrl}
+                height='50px'
+            />
+        </Avatar>;
         const title = <TextBox> {product.title} </TextBox>;
         const price = <Price currency="руб."> {product.price} </Price>;
 
