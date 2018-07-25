@@ -6,7 +6,9 @@ import {
     Divider,
 } from '@material-ui/core';
 
+import products from './constants/Products';
 import Header from './Header';
+import { Provider } from './CartContext';
 
 const styles = theme => ({
     container: {
@@ -19,15 +21,22 @@ const styles = theme => ({
 });
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { cart: [] };
+    }
+
     render() {
         const { title, classes } = this.props;
         return (
             <CssBaseline>
                 <Grid container className={classes.container}>
                     <Grid item xs={12}>
-                        <Header title="Pragmatic Book Store" />
-                        <Divider className={classes.divider} />
-                        <div> {this.props.children} </div>
+                        <Provider value={this.state.cart}>
+                            <Header title="Pragmatic Book Store" />
+                            <Divider className={classes.divider} />
+                            <div> {this.props.children} </div>
+                        </Provider>
                     </Grid>                    
                 </Grid>
             </CssBaseline>

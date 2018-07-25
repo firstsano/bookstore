@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core';
 
 import Cart from './Cart';
+import { Consumer } from './CartContext';
 
 const styles = {
     toolbar: {
@@ -28,7 +29,9 @@ class Header extends Component {
                     </Grid>
                     <Grid item xs={4}>
                         <Toolbar className={classes.toolbar}>
-                            <Cart />
+                            <Consumer>
+                                { (products) => <Cart products={products} /> }
+                            </Consumer>
                         </Toolbar>
                     </Grid>
                 </Grid>
