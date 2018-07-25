@@ -30,6 +30,16 @@ const styles = {
 };
 
 class ProductCard extends Component {
+    constructor(props) {
+        super(props);
+        this.addToCart = this.addToCart.bind(this);
+    }
+
+    addToCart() {
+        const { product, addToCart } = this.props;
+        addToCart(product);
+    }
+
     render() {
         const { product, classes } = this.props;
         const avatar = <Avatar>
@@ -51,11 +61,21 @@ class ProductCard extends Component {
                 <CardContent>
                     <Grid container>
                         <Grid item xs={9}>
-                            <Chip avatar={avatar} label={title} classes={{label: classes.chip}} />
+                            <Chip
+                                avatar={avatar}
+                                label={title}
+                                classes={{label: classes.chip}}
+                            />
                             <Typography component="p"> {price} </Typography>
                         </Grid>
                         <Grid container item xs={3}>
-                            <Button variant="fab" color="primary" aria-label="Add to card" className={classes.button}>
+                            <Button
+                                onClick={this.addToCart}
+                                variant="fab"
+                                color="primary"
+                                aria-label="Add to card"
+                                className={classes.button}
+                            >
                                 <ShoppingBasketIcon />
                             </Button>
                         </Grid>

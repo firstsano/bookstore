@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid';
 
+import { Consumer } from './CartContext';
 import ProductCard from './ProductCard';
 
 const styles = {
@@ -18,7 +19,9 @@ class Catalog extends Component {
         const { products, classes } = this.props;
         const productsList = products.map((product, index) =>
             <Grid item component='li' className={classes.listItem} key={product.id} xs={4}>
-                <ProductCard product={product} />
+                <Consumer>
+                    { ({cart, addToCart}) => <ProductCard product={product} addToCart={addToCart} /> }
+                </Consumer>
             </Grid>
         );
 

@@ -20,10 +20,32 @@ const styles = theme => ({
     }
 });
 
+class Cart {
+    constructor(callback) {
+        this.items = new Map();
+    }
+
+    addToCart(item, quantity = 1) {
+        if (this.items.has(item)) {
+            quantity = this.items.get(item) + quantity;
+        }
+        this.items.set(item, quantity);
+    }
+
+    get products() {
+        return this.items;
+    }
+}
+
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = { cart: [] };
+        const cart = new Cart();
+        const addToCart = (product) => {
+            cart.addToCart(product);
+            this.setState({cart});
+        };
+        this.state = { cart, addToCart };
     }
 
     render() {
@@ -32,7 +54,7 @@ class App extends Component {
             <CssBaseline>
                 <Grid container className={classes.container}>
                     <Grid item xs={12}>
-                        <Provider value={this.state.cart}>
+                        <Provider value={this.state}>
                             <Header title="Pragmatic Book Store" />
                             <Divider className={classes.divider} />
                             <div> {this.props.children} </div>
