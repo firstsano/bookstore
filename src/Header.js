@@ -30,7 +30,7 @@ class Header extends Component {
                     <Grid item xs={4}>
                         <Toolbar className={classes.toolbar}>
                             <Consumer>
-                                { ({cart}) => <Cart products={cart.products} /> }
+                                { ({cart, addToCart}) => <Cart products={cart.products} addToCart={addToCart} /> }
                             </Consumer>
                         </Toolbar>
                     </Grid>

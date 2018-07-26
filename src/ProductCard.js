@@ -53,8 +53,12 @@ class ProductCard extends Component {
         addToCart(product, quantity);
     }
 
+    onDragStart(event, product) {
+        event.dataTransfer.setData('data', product);
+    }
+
     render() {
-        const { product, classes } = this.props;
+        const { product, classes, className, draggable } = this.props;
         const { quantity } = this.state;
         const avatar = <Avatar>
             <Image
@@ -66,7 +70,10 @@ class ProductCard extends Component {
         const price = <Price currency="руб."> {product.price} </Price>;
 
         return(
-            <Card>
+            <Card
+                draggable
+                onDragStart={(e) => this.onDragStart(e, product)}
+            >
                 <CardMedia
                     className={classes.media}
                     image={product.imageUrl}

@@ -20,7 +20,14 @@ class Catalog extends Component {
         const productsList = products.map((product, index) =>
             <Grid item component='li' className={classes.listItem} key={product.id} xs={4}>
                 <Consumer>
-                    { ({cart, addToCart}) => <ProductCard product={product} addToCart={addToCart} /> }
+                    {
+                        ({cart, addToCart}) => (
+                            <ProductCard
+                                product={product}
+                                addToCart={addToCart}
+                            />
+                        )
+                    }
                 </Consumer>
             </Grid>
         );
