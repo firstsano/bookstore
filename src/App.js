@@ -41,8 +41,8 @@ class App extends Component {
     constructor(props) {
         super(props);
         const cart = new Cart();
-        const addToCart = (product) => {
-            cart.addToCart(product);
+        const addToCart = (product, quantity) => {
+            cart.addToCart(product, quantity);
             this.setState({cart});
         };
         this.state = { cart, addToCart };
