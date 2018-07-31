@@ -1,4 +1,4 @@
-import images from './../../web/img/*.png'
+import images from './../../web/img/*.png';
 
 const products = [
     {
