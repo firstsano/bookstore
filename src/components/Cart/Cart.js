@@ -1,7 +1,9 @@
-import sum from 'lodash-es/sum';
 import React, { Component } from 'react';
 import CartIcon from '@material-ui/icons/ShoppingCart';
 import { IconButton, Badge } from '@material-ui/core';
+import _ from 'lodash';
+
+import { withCartContext } from '~/src/containers/CartContext';
 
 
 class Cart extends Component {
@@ -10,21 +12,10 @@ class Cart extends Component {
         this.state = { color: "inherit" };
     }
 
-    get cart() {
-        if (this.cartSize == 0) {
-            return <CartIcon />;
-        }
-        return (
-            <Badge badgeContent={this.cartSize} color="secondary">
-                <CartIcon />
-            </Badge>
-        );
-    }
-
     get cartSize() {
-        const { products } = this.props;
-        const values = Array.from(products.values());
-        return sum(values);
+        const products = this.props.cart.values();
+        const values = Array.from(products);
+        return _.sum(values);
     }
 
     onDragOver(event) {
@@ -35,13 +26,13 @@ class Cart extends Component {
     onDrop(event) {
         event.preventDefault();
         this.setState({color: "inherit"});
-        const product = event.dataTransfer.getData('data');
-        this.addToCart(product);
+        let product = event.dataTransfer.getData('text/plain');
+        product = JSON.parse(product);
+        this.props.addToCart(product);
     }
 
     addToCart(product) {
-        const { addToCart } = this.props;
-        addToCart(product)
+        this.props.addToCart(product);
     }
 
     onDragLeave(event) {
@@ -50,6 +41,14 @@ class Cart extends Component {
     }
 
     render() {
+        let cartIcon = <CartIcon />;
+        if (this.cartSize > 0) {
+            cartIcon = <Badge badgeContent={this.cartSize} color="secondary">
+                <CartIcon />
+            </Badge>
+            ;
+        }
+
         return (
             <IconButton
                 aria-label="Shopping cart"
@@ -58,14 +57,10 @@ class Cart extends Component {
                 onDragOver={(e) => this.onDragOver(e)}
                 onDrop={(e) => this.onDrop(e)}
             >
-                {this.cart}
+                {cartIcon}
             </IconButton>
         );
     }
 }
 
-Cart.defaultProps = {
-    products: new Map()
-};
-
-export default Cart;
+export default withCartContext(Cart);
