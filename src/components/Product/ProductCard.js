@@ -5,26 +5,19 @@ import {
     Card,
     CardMedia,
     CardContent,
-    Typography,
-    Chip,
-    Avatar
+    Typography
 } from '@material-ui/core';
 
-import Image from './Image';
 import Price from './Price';
-import TextBox from './TextBox';
+import ProductChip from './ProductChip';
 import PurchaseControls from './PurchaseControls';
 
 
 const styles = {
-    chip: {
-        whiteSpace: 'normal'
-    },
     media: {
         height: 0,
         paddingTop: '56.25%',
-    },
-    
+    }
 };
 
 class ProductCard extends Component {
@@ -34,15 +27,6 @@ class ProductCard extends Component {
 
     render() {
         const { product, classes } = this.props;
-        const avatar = <Avatar>
-            <Image
-                src={product.imageUrl}
-                height='50px'
-            />
-        </Avatar>;
-        const title = <TextBox> {product.title} </TextBox>;
-        const price = <Price currency="руб."> {product.price} </Price>;
-
         return (
             <Card
                 draggable
@@ -56,12 +40,10 @@ class ProductCard extends Component {
                 <CardContent>
                     <Grid container>
                         <Grid item xs={8}>
-                            <Chip
-                                avatar={avatar}
-                                label={title}
-                                classes={{label: classes.chip}}
-                            />
-                            <Typography component="p"> {price} </Typography>
+                            <ProductChip product={product} />
+                            <Typography component="p">
+                                <Price currency="руб."> {product.price} </Price>
+                            </Typography>
                         </Grid>
                         <Grid container item xs={4}>
                             <PurchaseControls product={product} />
