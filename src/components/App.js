@@ -5,8 +5,11 @@ import { Divider } from '@material-ui/core';
 
 import Layout from '~/src/components/Layout';
 import CartContainer from '~/src/containers/CartContext';
-import Header from '~/src/components/Header';
-import CatalogPage from '~/src/containers/CatalogPage';
+import Header from '~/src/components/Header/Header';
+import {
+    Router,
+    Switch as AppBody
+} from '~/src/helpers/Router';
 
 
 const styles = () => ({
@@ -17,16 +20,19 @@ const styles = () => ({
 
 class App extends Component {
     render() {
-        const { children, classes } = this.props;
+        const { classes } = this.props;
+
         return (
             <CssBaseline>
-                <Layout>
+                <Router>
                     <CartContainer>
-                        <Header title="Pragmatic Book Store" />
-                        <Divider className={classes.divider} />
-                        <CatalogPage />
+                        <Layout>
+                            <Header title="Pragmatic Book Store" />
+                            <Divider className={classes.divider} />
+                            <AppBody />
+                        </Layout>
                     </CartContainer>
-                </Layout>
+                </Router>
             </CssBaseline>
         );
     }

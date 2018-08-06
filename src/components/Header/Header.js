@@ -8,6 +8,8 @@ import {
 } from '@material-ui/core';
 
 import Cart from '~/src/components/Cart/Cart';
+import menuOptions from '~/src/helpers/Menu';
+import Menu from './Menu';
 
 
 const styles = {
@@ -19,11 +21,13 @@ const styles = {
 class Header extends Component {
     render() {
         const { classes, title } = this.props;
+
         return (
             <AppBar position="static">
                 <Grid container>
                     <Grid item xs={8}>
                         <Toolbar>
+                            <Menu options={menuOptions} />
                             <Typography variant="title" color="inherit"> {title} </Typography>
                         </Toolbar>
                     </Grid>

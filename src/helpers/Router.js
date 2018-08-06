@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {
-    BrowserRouter as Router,
-    Switch,
+    BrowserRouter as BaseRouter,
+    Switch as BaseSwitch,
     Route
 } from 'react-router-dom';
 
@@ -18,10 +18,16 @@ const routes = [
     ProductRoute
 ];
 
-export default () => (
-    <Router>
-        <Switch>
-            {routes.map((props) => <Route key={props.name} {...props} />)}
-        </Switch>
-    </Router>
+export const Switch = () => (
+    <BaseSwitch>
+        {routes.map((props) => <Route key={props.name} {...props} />)}
+    </BaseSwitch>
+);
+
+export const Router = ({children}) => (
+    <BaseRouter>
+        <Fragment>
+            {children}
+        </Fragment>
+    </BaseRouter>
 );
