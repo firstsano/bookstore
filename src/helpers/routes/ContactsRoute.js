@@ -1,5 +1,7 @@
 import React from 'react';
 
+import ContactsPage from '~/src/containers/views/ContactsPage';
+
 
 export const contactsPath = () => `/contacts`;
 
@@ -8,5 +10,5 @@ export default {
     exact: true,
     strict: false,
     path: contactsPath(),
-    render: () => "contacts"
+    render: () => <ContactsPage />
 };
