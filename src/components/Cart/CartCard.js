@@ -39,9 +39,11 @@ class CartCard extends Component {
                                         label={product.title}
                                     />
                                 </TableCell>
-                                <TableCell numeric>{product.price}</TableCell>
                                 <TableCell numeric>
-                                    <Price currency={currency} > {product.quantity} </Price>
+                                    <Price currency={currency} > {product.price} </Price>
+                                </TableCell>
+                                <TableCell numeric>
+                                    <Price currency={'шт.'} > {product.quantity} </Price>
                                 </TableCell>
                                 <TableCell numeric>
                                     <Price currency={currency} > {product.totalPrice} </Price>

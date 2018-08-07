@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import products from '~/src/constants/Products';
 import Catalog from '~/src/components/Catalog';
+import AutoSnack from '~/src/components/AutoSnack';
 
 
 class CatalogPage extends Component {
@@ -11,8 +13,20 @@ class CatalogPage extends Component {
     }
 
     render() {
-        return <Catalog products={this.state.products} />;
+        const { location } = this.props;
+
+        return (
+            <Fragment>
+                <Catalog products={this.state.products} />
+                {location.state && location.state.withMessage &&
+                    <AutoSnack
+                        duration={3000}
+                        message={location.state.withMessage}
+                    />
+                }
+            </Fragment>
+        )
     }
 }
 
-export default CatalogPage;
+export default withRouter(CatalogPage);
