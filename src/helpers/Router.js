@@ -9,6 +9,7 @@ import CartRoute from './routes/CartRoute';
 import CatalogRoute from './routes/CatalogRoute';
 import ContactsRoute from './routes/ContactsRoute';
 import ProductRoute from './routes/ProductRoute';
+import NotFoundRoute from './routes/NotFoundRoute';
 import history from './History';
 
 
@@ -16,7 +17,8 @@ const routes = [
     CartRoute,
     CatalogRoute,
     ContactsRoute,
-    ProductRoute
+    ProductRoute,
+    NotFoundRoute
 ];
 
 export const Switch = () => (
