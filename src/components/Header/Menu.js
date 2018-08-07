@@ -12,16 +12,17 @@ import MenuIcon from '@material-ui/icons/Menu';
 class Menu extends Component {
     constructor(props) {
         super(props);
-        this.state = { element: null, selected: null };
+        this.state = { element: null };
         this.handleOpen = this.handleOpen.bind(this);
+        this.handleClose = this.handleClose.bind(this);
     }
 
     handleOpen(event) {
         this.setState({ element: event.currentTarget });
     }
 
-    handleClose(name) {
-        this.setState({ element: null, selected: name });
+    handleClose(event) {
+        this.setState({ element: null });
     }
 
     render() {
@@ -43,9 +44,8 @@ class Menu extends Component {
                         <MenuItem
                             component={NavLink}
                             to={option.url}
-                            selected={selected == option.name}
                             key={option.name}
-                            onClick={(e) => this.handleClose(option.name)}
+                            onClick={this.handleClose}
                         >
                             {option.name}
                         </MenuItem>
