@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Chip, Avatar } from '@material-ui/core';
 
-import Image from './Image';
-import TextBox from './TextBox';
+import Image from '~/src/components/Image';
+import TextBox from '~/src/components/TextBox';
 
 
 const styles = {

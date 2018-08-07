@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import CartIcon from '@material-ui/icons/ShoppingCart';
 import { IconButton, Badge } from '@material-ui/core';
 import _ from 'lodash';
 
 import { withCartContext } from '~/src/containers/CartContext';
+import { cartPath } from '~/src/helpers/routes/CartRoute';
 
 
-class Cart extends Component {
+class CartButton extends Component {
     constructor(props) {
         super(props);
         this.state = { color: "inherit" };
@@ -29,6 +31,11 @@ class Cart extends Component {
         let product = event.dataTransfer.getData('text/plain');
         product = JSON.parse(product);
         this.props.addToCart(product);
+    }
+
+    navigateToCart() {
+        const { history } = this.props;
+        history.push(cartPath());
     }
 
     addToCart(product) {
@@ -56,6 +63,7 @@ class Cart extends Component {
                 onDragLeave={(e) => this.onDragLeave(e)}
                 onDragOver={(e) => this.onDragOver(e)}
                 onDrop={(e) => this.onDrop(e)}
+                onClick={(e) => this.navigateToCart(e)}
             >
                 {cartIcon}
             </IconButton>
@@ -63,4 +71,4 @@ class Cart extends Component {
     }
 }
 
-export default withCartContext(Cart);
+export default withRouter(withCartContext(CartButton));

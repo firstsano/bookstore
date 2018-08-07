@@ -9,6 +9,7 @@ class CartContainer extends Component {
         super(props);
         const cart = new Map();
         this.addToCart = this.addToCart.bind(this);
+        this.cartProducts = this.cartProducts.bind(this);
         this.state = { cart };
     }
 
@@ -21,12 +22,28 @@ class CartContainer extends Component {
         console.log(cart);
     }
 
+    cartProducts() {
+        const { cart } = this.state;
+        const products = cart.keys();
+        let output = [];
+        for (let product of products) {
+            let extendedProduct = Object.assign({},
+                product,
+                { quantity: cart.get(product) }
+            );
+            extendedProduct.totalPrice = extendedProduct.price * extendedProduct.quantity;
+            output.push(extendedProduct);
+        }
+        return output;
+    }
+
     render() {
         const { cart } = this.state,
-              addToCart = this.addToCart
+              addToCart = this.addToCart,
+              cartProducts = this.cartProducts()
         ;
         return (
-            <CartContext.Provider value={{ cart, addToCart }}>
+            <CartContext.Provider value={{ cart, addToCart, cartProducts }}>
                 {this.props.children}
             </CartContext.Provider>
         );
@@ -37,7 +54,11 @@ export function withCartContext(Component) {
   return function CartedComponent(props) {
     return (
       <CartContext.Consumer>
-        {({cart, addToCart}) => <Component {...props} cart={cart} addToCart={addToCart} />}
+        {({cart, addToCart, cartProducts}) => (
+            <Component {...props}
+                       {...{cart, addToCart, cartProducts}}
+            />
+        )}
       </CartContext.Consumer>
     );
   };

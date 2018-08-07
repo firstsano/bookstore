@@ -1,5 +1,7 @@
 import React from 'react';
 
+import CartPage from '~/src/containers/views/CartPage';
+
 
 export const cartPath = () => `/cart`;
 
@@ -8,5 +10,5 @@ export default {
     exact: true,
     strict: false,
     path: cartPath(),
-    render: () => "cart"
+    render: () => <CartPage />
 };

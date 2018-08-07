@@ -8,7 +8,7 @@ import {
     Typography
 } from '@material-ui/core';
 
-import Price from './Price';
+import Price from '~/src/components/Price';
 import ProductChip from './ProductChip';
 import PurchaseControls from './PurchaseControls';
 
