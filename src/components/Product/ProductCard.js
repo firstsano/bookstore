@@ -28,6 +28,7 @@ class ProductCard extends Component {
 
     render() {
         const { product, classes } = this.props;
+
         return (
             <Card
                 draggable
@@ -35,7 +36,7 @@ class ProductCard extends Component {
             >
                 <CardMedia
                     className={classes.media}
-                    image={product.imageUrl}
+                    image={product.mainImage}
                     title={product.title}
                 />
                 <CardContent>
