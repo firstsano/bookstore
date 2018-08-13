@@ -2,22 +2,20 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import CartIcon from '@material-ui/icons/ShoppingCart';
 import { IconButton, Badge } from '@material-ui/core';
-import _ from 'lodash';
+import { sum } from 'lodash';
 
-import { withCartContext } from '~/src/containers/CartContext';
 import { cartPath } from '~/src/helpers/routes/CartRoute';
 
 
-class CartButton extends Component {
+class Button extends Component {
     constructor(props) {
         super(props);
         this.state = { color: "inherit" };
     }
 
     get cartSize() {
-        const products = this.props.cart.values();
-        const values = Array.from(products);
-        return _.sum(values);
+        const products = this.props.products;
+        return sum(products.map(p => p.quantity));
     }
 
     onDragOver(event) {
@@ -71,4 +69,4 @@ class CartButton extends Component {
     }
 }
 
-export default withRouter(withCartContext(CartButton));
+export default withRouter(Button);

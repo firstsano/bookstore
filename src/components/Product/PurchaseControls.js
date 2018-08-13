@@ -8,8 +8,6 @@ import {
 } from '@material-ui/core';
 import _ from 'lodash';
 
-import { withCartContext } from '~/src/containers/CartContext';
-
 
 const styles = {
     input: {
@@ -20,6 +18,12 @@ const styles = {
 };
 
 class PurchaseControls extends Component {
+    static get defaultProps() {
+        return {
+            variant: 'fab'
+        };
+    }
+
     constructor(props) {
         super(props);
         this.addToCart = this.addToCart.bind(this);
@@ -40,6 +44,8 @@ class PurchaseControls extends Component {
     }
 
     render() {
+        const { variant, buttonClass, classes } = this.props;
+
         return (
             <Grid container>
                 <Grid item container xs={6}>
@@ -47,15 +53,16 @@ class PurchaseControls extends Component {
                         value={this.state.quantity}
                         onChange={this.changeQuantity}
                         margin="dense"
-                        className={this.props.classes.input}
+                        className={classes.input}
                     />
                 </Grid>
                 <Grid item xs={6}>
                     <Button
                         onClick={this.addToCart}
-                        variant="fab"
+                        variant={variant}
                         color="primary"
                         aria-label="Add to card"
+                        className={buttonClass}
                     >
                         <ShoppingBasketIcon />
                     </Button>
@@ -65,4 +72,4 @@ class PurchaseControls extends Component {
     }
 }
 
-export default withStyles(styles)(withCartContext(PurchaseControls));
+export default withStyles(styles)(PurchaseControls);

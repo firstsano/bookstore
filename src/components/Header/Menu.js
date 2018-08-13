@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import {
     IconButton,
@@ -7,6 +6,10 @@ import {
     MenuItem
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+
+import { cartPath } from '~/src/helpers/routes/CartRoute';
+import { catalogPath } from '~/src/helpers/routes/CatalogRoute';
+import { contactsPath } from '~/src/helpers/routes/ContactsRoute';
 
 
 class Menu extends Component {
@@ -21,13 +24,12 @@ class Menu extends Component {
         this.setState({ element: event.currentTarget });
     }
 
-    handleClose(event) {
+    handleClose() {
         this.setState({ element: null });
     }
 
     render() {
-        const { options } = this.props;
-        const { selected, element } = this.state;
+        const { element } = this.state;
         const isOpen = Boolean(element);
 
         return (
@@ -40,27 +42,31 @@ class Menu extends Component {
                     open={isOpen}
                     onClose={this.handleClose}
                 >
-                    {options.map(option => (
-                        <MenuItem
-                            component={NavLink}
-                            to={option.url}
-                            key={option.name}
-                            onClick={this.handleClose}
-                        >
-                            {option.name}
-                        </MenuItem>
-                    ))}
+                    <MenuItem
+                        component={NavLink}
+                        to={catalogPath()}
+                        onClick={this.handleClose}
+                    >
+                        Main
+                    </MenuItem>
+                    <MenuItem
+                        component={NavLink}
+                        to={cartPath()}
+                        onClick={this.handleClose}
+                    >
+                        Cart
+                    </MenuItem>
+                    <MenuItem
+                        component={NavLink}
+                        to={contactsPath()}
+                        onClick={this.handleClose}
+                    >
+                        Contacts
+                    </MenuItem>
                 </BaseMenu>
             </Fragment>
         );
     }
 }
-
-Menu.propTypes = {
-    options: PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string,
-        url: PropTypes.string
-    })).isRequired
-};
 
 export default Menu;

@@ -1,15 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Divider } from '@material-ui/core';
+import {
+    Router,
+    Switch,
+    Route
+} from 'react-router-dom';
 
 import Layout from '~/src/components/Layout';
 import CartContainer from '~/src/containers/CartContext';
 import Header from '~/src/components/Header/Header';
-import {
-    Router,
-    Switch as AppBody
-} from '~/src/helpers/Router';
+import routes from '~/src/helpers/routes/index';
+import history from '~/src/helpers/History';
 
 
 const styles = () => ({
@@ -24,15 +27,19 @@ class App extends Component {
 
         return (
             <CssBaseline>
-                <Router>
-                    <CartContainer>
-                        <Layout>
-                            <Header title="Pragmatic Book Store" />
-                            <Divider className={classes.divider} />
-                            <AppBody />
-                        </Layout>
-                    </CartContainer>
-                </Router>
+                <CartContainer>
+                    <Layout>
+                        <Router history={history}>
+                            <Fragment>
+                                <Header title="Pragmatic Book Store" />
+                                <Divider className={classes.divider} />
+                                <Switch>
+                                    {routes.map((props) => <Route key={props.name} {...props} />)}
+                                </Switch>
+                            </Fragment>
+                        </Router>
+                    </Layout>
+                </CartContainer>
             </CssBaseline>
         );
     }

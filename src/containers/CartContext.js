@@ -9,59 +9,41 @@ class CartContainer extends Component {
         super(props);
         const cart = new Map();
         this.addToCart = this.addToCart.bind(this);
-        this.cartProducts = this.cartProducts.bind(this);
         this.state = { cart };
     }
 
     addToCart(item, quantity = 1) {
         const { cart } =  this.state;
-        let itemQuantity = quantity;
-        if (cart.has(item)) { itemQuantity += cart.get(item); }
+        let itemQuantity = cart.has(item) ? quantity + cart.get(item) : quantity;
         cart.set(item, itemQuantity);
         this.setState({cart});
-        console.log(cart);
     }
 
-    cartProducts() {
+    getProducts() {
         const { cart } = this.state;
-        const products = cart.keys();
-        let output = [];
-        for (let product of products) {
-            let extendedProduct = Object.assign({},
-                product,
-                { quantity: cart.get(product) }
-            );
-            extendedProduct.totalPrice = extendedProduct.price * extendedProduct.quantity;
-            output.push(extendedProduct);
+        const keys = cart.keys();
+        const products = [];
+        for (let key of keys) {
+            const quantity = cart.get(key);
+            const product = Object.assign({}, key, { quantity }, {
+                totalPrice: key.price * quantity
+            });
+            products.push(product);
         }
-        return output;
+        return products;
     }
 
     render() {
-        const { cart } = this.state,
-              addToCart = this.addToCart,
-              cartProducts = this.cartProducts()
+        const addToCart = this.addToCart,
+              products = this.getProducts()
         ;
+
         return (
-            <CartContext.Provider value={{ cart, addToCart, cartProducts }}>
+            <CartContext.Provider value={{ addToCart, products }}>
                 {this.props.children}
             </CartContext.Provider>
         );
     }
-}
-
-export function withCartContext(Component) {
-  return function CartedComponent(props) {
-    return (
-      <CartContext.Consumer>
-        {({cart, addToCart, cartProducts}) => (
-            <Component {...props}
-                       {...{cart, addToCart, cartProducts}}
-            />
-        )}
-      </CartContext.Consumer>
-    );
-  };
 }
 
 export const Provider = CartContainer;

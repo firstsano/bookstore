@@ -7,8 +7,8 @@ import {
     Grid
 } from '@material-ui/core';
 
-import CartButton from '~/src/components/Cart/CartButton';
-import menuOptions from '~/src/helpers/Menu';
+import { Consumer } from '~/src/containers/CartContext';
+import CartButton from '~/src/components/Cart/Button';
 import Menu from './Menu';
 
 
@@ -27,12 +27,16 @@ class Header extends Component {
                 <Grid container>
                     <Grid item xs={8}>
                         <Toolbar>
-                            <Menu options={menuOptions} />
+                            <Menu />
                             <Typography variant="title" color="inherit"> {title} </Typography>
                         </Toolbar>
                     </Grid>
                     <Grid item xs={4}>
-                        <Toolbar className={classes.toolbar}> <CartButton /> </Toolbar>
+                        <Toolbar className={classes.toolbar}>
+                            <Consumer>
+                                {({addToCart, products}) => <CartButton {...{addToCart, products}}/>}
+                            </Consumer>
+                        </Toolbar>
                     </Grid>
                 </Grid>
             </AppBar>
