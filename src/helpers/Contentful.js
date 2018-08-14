@@ -3,6 +3,7 @@ import { camelizeKeys } from 'humps';
 import {
     set,
     get,
+    first,
     flattenDeep
 } from 'lodash';
 
@@ -14,7 +15,8 @@ const SERVER = 'https://cdn.contentful.com';
 const {
     ACCESS_TOKEN,
     SPACE,
-    ENVIRONMENT
+    ENVIRONMENT,
+    PRODUCT_ATTRIBUTES
 } = SETTINGS;
 
 const AUTH_HEADERS = {
@@ -30,10 +32,12 @@ const PATHES = {
     ASSET_URL: 'body.fields.file.url'
 };
 
-const productsRequest = function() {
-    const query = { content_type: 'product' },
-          url = `${SERVER}/spaces/${SPACE}/environments/${ENVIRONMENT}/entries`
-    ;
+const productsRequest = function(productId) {
+    const url = `${SERVER}/spaces/${SPACE}/environments/${ENVIRONMENT}/entries`;
+    let query = { content_type: 'product' };
+    if (productId) {
+        query["fields.id[equals]"] = productId;
+    }
     return request
             .get(url)
             .set(AUTH_HEADERS)
@@ -49,22 +53,50 @@ const assetRequest = function(asset) {
     ;
 }
 
-export const getProducts = async function() {
-    const response = await productsRequest();
-    const productItems = get(camelizeKeys(response), PATHES.ITEMS, []);
-    const allAssets = productItems.map(item => get(item, PATHES.PRODUCT_IMAGES, []));
-    const assetsIds = flattenDeep(allAssets).map(asset => get(asset, PATHES.ID));
-    const assetsResponse = await Promise.all(assetsIds.map(id => assetRequest(id)));
+const productsFromResponse = function(response, assets) {
+    const products = [];
+    for (let item of response) {
+        const product = { images: [] };
+        PRODUCT_ATTRIBUTES.forEach((attribute) => {
+            product[attribute] = get(item, `fields.${attribute}`);
+        })
+        get(item, 'fields.images', []).forEach((image) => {
+            const imageId = get(image, PATHES.ID);
+            product.images.push(assets[imageId]);
+        });
+        product.mainImage = first(product.images);
+        products.push(product);
+    }
+    return products;
+}
+
+const getAssetsIdsFromResponse = function(response) {
+    const allAssets = response.map(item => get(item, PATHES.PRODUCT_IMAGES, []));
+    return flattenDeep(allAssets).map(asset => get(asset, PATHES.ID));
+};
+
+const loadAssets = async function(ids) {
+    const assetsResponse = await Promise.all(ids.map(id => assetRequest(id)));
     const assetsInfo = camelizeKeys(assetsResponse);
-    const assets = Object.assign({},
+    return Object.assign({},
         ...assetsInfo.map(info => ({
             [get(info, PATHES.ASSET_ID)]: get(info, PATHES.ASSET_URL)
         }))
     );
-    for (let item of productItems) {
-        const productAssets = get(item, PATHES.PRODUCT_IMAGES, []).map(asset => get(asset, PATHES.ID));
+};
+
+const setupProductImages = function (products, assets) {
+    for (let product of products) {
+        const productAssets = get(product, PATHES.PRODUCT_IMAGES, []).map(asset => get(asset, PATHES.ID));
         const productImages = productAssets.map(id => assets[id]);
-        set(item, PATHES.PRODUCT_IMAGES, productImages);
+        set(product, PATHES.PRODUCT_IMAGES, productImages);
     }
-    return productItems;
+}
+
+export const getProducts = async function(id) {
+    const response = await productsRequest(id);
+    const productItems = get(camelizeKeys(response), PATHES.ITEMS, []);
+    const assetsIds = getAssetsIdsFromResponse(productItems)
+    const assets = await loadAssets(assetsIds);
+    return productsFromResponse(productItems, assets);
 };

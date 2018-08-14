@@ -1,60 +1,40 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import {
-    Grid,
-    Paper
-} from '@material-ui/core';
+import { isEmpty, first } from 'lodash';
+import { Redirect } from 'react-router-dom';
 
-import { productType } from '~/src/helpers/types';
-import Description from '~/src/components/Product/Description';
-import Image from '~/src/components/Image';
+import Overview from '~/src/components/Product/Overview';
+import { notFoundPath } from '~/src/helpers/routes/NotFoundRoute';
+import { getProducts } from '~/src/helpers/Contentful';
 
-
-const styles = {
-    root: {
-        padding: '20px'
-    },
-    mainImage: {
-        width: '90%',
-        height: 'auto',
-        margin: 'auto',
-        display: 'block'
-    },
-    description: {
-        flexGrow: 1
-    }
-};
 
 class ProductPage extends Component {
-    static get propTypes() {
-        return {
-            product: productType.isRequired
-        };
+    constructor(props) {
+        super(props);
+        this.state = { product: null }
+    }
+
+    componentDidMount() {
+        this.fetchProduct();
+    }
+
+    async fetchProduct() {
+        const products = await getProducts(this.props.productId);
+        if (isEmpty(products)) {
+            this.setState({ product: false });
+        }
+        const product = first(products);
+        this.setState({ product });
     }
 
     render() {
-        const { classes, product } = this.props;
-        const { title, imageUrl } = product;
-
-        return (
-            <Paper className={classes.root}>
-                <Grid container spacing={16}>
-                    <Grid item xs={8}>
-                        <Paper>
-                            <Image
-                                className={classes.mainImage}
-                                src={imageUrl}
-                                alt={title}
-                            />
-                        </Paper>
-                    </Grid>
-                    <Grid item xs={4} className={classes.description}>
-                        <Description product={product} />
-                    </Grid>
-                </Grid>
-            </Paper>
-        );
+        const { product } = this.state;
+        if (product === null) {
+            return 'Загрузка...';
+        } else if (product === false) {
+            return <Redirect to={{ pathname: notFoundPath() }}/>
+        }
+        return <Overview product={product} />;
     }
 }
 
-export default withStyles(styles)(ProductPage);
+export default ProductPage;

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {
     Chip,
     Avatar,
@@ -20,20 +19,13 @@ class Row extends Component {
     }
 
     render() {
-        const {
-            id,
-            imageUrl,
-            title,
-            quantity,
-            totalPrice,
-            price
-        } = this.props.product;
+        const { id, mainImage, title, quantity, totalPrice, price } = this.props.product;
 
         return (
             <TableRow key={id}>
                 <TableCell component="th" scope="row">
                     <Chip
-                        avatar={<Avatar src={imageUrl} />}
+                        avatar={<Avatar src={mainImage} />}
                         label={title}
                     />
                 </TableCell>

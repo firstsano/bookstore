@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import { Chip, Avatar } from '@material-ui/core';
-import { first } from 'lodash';
 
 import Image from '~/src/components/Image';
 import { productPath } from '~/src/helpers/routes/ProductRoute';
@@ -23,12 +22,11 @@ const styles = {
 class ProductChip extends Component {
     render() {
         const { classes, product } = this.props;
-        const { id, title } = product;
-        const imageUrl = first(product.images);
+        const { id, title, mainImage } = product;
 
         return (
             <Chip
-                avatar={<Avatar> <Image src={imageUrl} height='50px' /> </Avatar>}
+                avatar={<Avatar> <Image src={mainImage} height='50px' /> </Avatar>}
                 label={
                     <NavLink
                         className={classes.link}

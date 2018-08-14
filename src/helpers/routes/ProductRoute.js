@@ -1,8 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 
-import products from '~/src/constants/Products';
-import { notFoundPath } from '~/src/helpers/routes/NotFoundRoute';
 import ProductPage from '~/src/containers/views/ProductPage';
 
 
@@ -15,10 +12,6 @@ export default {
     path: productPath(),
     render: ({match}) => {
         const { id } = match.params;
-        const product = products.find(item => item.id === Number.parseInt(id));
-        if (!product) {
-            return <Redirect to={{pathname: notFoundPath()}} />
-        }
-        return <ProductPage product={product} />;
+        return <ProductPage productId={id} />;
     }
 };
