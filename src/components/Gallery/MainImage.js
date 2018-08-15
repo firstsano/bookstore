@@ -4,21 +4,27 @@ import Swipeable from 'react-swipeable';
 import {
     Paper,
     Button,
-    Icon
+    Icon,
+    Card,
+    CardMedia
 } from '@material-ui/core';
-
-import Image from '~/src/components/Image';
 
 
 const styles = {
     root: {
-        position: 'relative'
+        position: 'relative',
+        height: '100%'
     },
-    mainImage: {
-        width: '90%',
-        height: 'auto',
-        margin: 'auto',
-        display: 'block'
+    card: {
+        width: '100%',
+        height: '100%',
+        padding: 5
+    },
+    media: {
+        height: '100%',
+    },
+    swiper: {
+        height: '100%'
     },
     button: {
         opacity: 0.9,
@@ -31,6 +37,12 @@ const styles = {
     },
     buttonRight: {
         right: 10
+    },
+    buttonCenter: {
+        top: 'initial',
+        bottom: 10,
+        left: '50%',
+        marginTop: -25
     }
 };
 
@@ -38,7 +50,7 @@ class MainImage extends Component {
     render() {
         const {
             classes, image, title,
-            onClickNext, onClickPrev
+            onClickNext, onClickPrev, onClickExpand
         } = this.props;
 
         return (
@@ -46,12 +58,15 @@ class MainImage extends Component {
                 <Swipeable
                     onSwipedRight={(e) => onClickPrev(e)}
                     onSwipedLeft={(e) => onClickNext(e)}
+                    className={classes.swiper}
                 >
-                    <Image
-                        className={classes.mainImage}
-                        src={image}
-                        alt={title}
-                    />
+                    <Card className={classes.card}>
+                        <CardMedia
+                            className={classes.media}
+                            image={image}
+                            title={title}
+                        />
+                    </Card>
                 </Swipeable>
                 <Button
                     mini
@@ -62,6 +77,18 @@ class MainImage extends Component {
                 >
                     <Icon>navigate_next_icon</Icon>
                 </Button>
+                {
+                    onClickExpand &&
+                    <Button
+                        mini
+                        variant="contained"
+                        color="primary"
+                        className={[classes.button, classes.buttonCenter].join(' ')}
+                        onClick={(e) => onClickExpand(e)}
+                    >
+                        <Icon>zoom_out_map_icon</Icon>
+                    </Button>
+                }
                 <Button
                     mini
                     variant="fab"
