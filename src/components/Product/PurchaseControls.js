@@ -14,13 +14,16 @@ const styles = {
         width: '30px',
         maxWidth: '100%',
         margin: 'auto',
+    },
+    fullWidthButton: {
+        width: '100%'
     }
 };
 
 class PurchaseControls extends Component {
     static get defaultProps() {
         return {
-            variant: 'fab'
+            onlyButton: false
         };
     }
 
@@ -43,26 +46,44 @@ class PurchaseControls extends Component {
         addToCart(product, quantity);
     }
 
+    get onlyButtonStyles() {
+        const { onlyButton, classes } = this.props;
+        return {
+            displayInput: !onlyButton,
+            buttonContainerWidth: onlyButton ? 12 : 6,
+            buttonType: onlyButton ? "contained" : "fab",
+            buttonWidth: onlyButton ? classes.fullWidthButton : ''
+        };
+    }
+
     render() {
-        const { variant, buttonClass, classes } = this.props;
+        const { classes } = this.props;
+        const {
+            displayInput,
+            buttonContainerWidth,
+            buttonWidth,
+            buttonType
+        } = this.onlyButtonStyles;
 
         return (
             <Grid container>
-                <Grid item container xs={6}>
-                    <TextField
-                        value={this.state.quantity}
-                        onChange={this.changeQuantity}
-                        margin="dense"
-                        className={classes.input}
-                    />
-                </Grid>
-                <Grid item xs={6}>
+                {displayInput &&
+                    <Grid item container xs={6}>
+                        <TextField
+                            value={this.state.quantity}
+                            onChange={this.changeQuantity}
+                            margin="dense"
+                            className={classes.input}
+                        />
+                    </Grid>
+                }
+                <Grid item xs={buttonContainerWidth}>
                     <Button
                         onClick={this.addToCart}
-                        variant={variant}
+                        variant={buttonType}
                         color="primary"
                         aria-label="Add to card"
-                        className={buttonClass}
+                        className={buttonWidth}
                     >
                         <ShoppingBasketIcon />
                     </Button>

@@ -12,10 +12,10 @@ class Numerical extends Component {
     }
 
     render() {
-        const { label, children } = this.props;
+        const { label, children, className } = this.props;
 
         return(
-            <span>
+            <span className={className}>
                 <TextBox> {children} </TextBox>
                 <TextBox> {label} </TextBox>
             </span>

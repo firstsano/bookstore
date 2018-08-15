@@ -10,21 +10,23 @@ import { Consumer } from '~/src/containers/CartContext';
 import { productType } from '~/src/helpers/types';
 import PurchaseControls from '~/src/components/Product/PurchaseControls';
 import Price from '~/src/components/Price';
+import Gallery from '~/src/components/Gallery';
 
 
-const styles = {
+const styles = (theme) => ({
     root: {
         height: '100%',
-        flexDirection: 'column',
-        alignItems: 'flex-end'
     },
     title: {
-        padding: '10px',
-        marginBottom: 'auto'
+        padding: 10,
     },
-    divider: {
-        margin: '10px 0',
-        width: '100%',
+    gallery: {
+        flexGrow: 1,
+        padding: 10,
+        borderStyle: 'solid none',
+        borderWidth: 1,
+        overflowY: 'auto',
+        borderColor: theme.palette.primary.main
     },
     mainImage: {
         width: '90%',
@@ -32,14 +34,14 @@ const styles = {
         margin: 'auto',
         display: 'block'
     },
-    property: {
-        textAlign: 'right',
-        fontWeight: 'bold'
+    properties: {
+        padding: '20px 10px'
     },
-    button: {
-        width: '100%'
+    price: {
+        float: 'right',
+        fontWeight: 'bold'
     }
-};
+});
 
 class Description extends Component {
     static get propTypes() {
@@ -49,40 +51,41 @@ class Description extends Component {
     }
 
     render() {
-        const { classes, product } = this.props;
-        const { title, price } = product;
+        const { classes, product, onImageSelect } = this.props;
+        const { title, price, images } = product;
 
         return (
-            <Grid container className={classes.root}>
-                <Typography
-                    variant="title"
-                    className={classes.title}
-                >
-                    {title}
-                    <Divider className={classes.divider} />
-                </Typography>
-                <Grid container>
-                    <Divider className={classes.divider} />
-                    <Grid item xs={6}>
-                        <Typography variant="caption"> Стоимость: </Typography>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Typography variant="caption" className={classes.property}>
-                            <Price> {price} </Price>
-                        </Typography>
-                    </Grid>
-                    <Divider className={classes.divider} />
+            <Grid
+                container
+                direction="column"
+                className={classes.root}
+            >
+                <Grid item>
+                    <Typography variant="title" className={classes.title} > {title} </Typography>
                 </Grid>
-                <Consumer>
-                    {({addToCart}) => (
-                        <PurchaseControls
-                            addToCart={addToCart}
-                            product={product}
-                            variant="extendedFab"
-                            buttonClass={classes.button}
-                        />
-                    )}
-                </Consumer>
+                <Grid item className={classes.gallery}>
+                    <Gallery
+                        images={images}
+                        onImageSelect={onImageSelect}
+                    />
+                </Grid>
+                <Grid item className={classes.properties} >
+                    <Typography variant="caption">
+                        Стоимость:
+                        <Price className={classes.price}> {price} </Price>
+                    </Typography>
+                </Grid>
+                <Grid item>
+                    <Consumer>
+                        {({addToCart}) => (
+                            <PurchaseControls
+                                onlyButton
+                                addToCart={addToCart}
+                                product={product}
+                            />
+                        )}
+                    </Consumer>
+                </Grid>
             </Grid>
         );
     }

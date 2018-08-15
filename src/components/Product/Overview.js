@@ -29,9 +29,19 @@ class Overview extends Component {
         };
     }
 
+    constructor(props) {
+        super(props);
+        this.state = { selectedImage: props.product.mainImage };
+    }
+
+    handleImageSelect(image) {
+        this.setState({ selectedImage: image });
+    }
+
     render() {
         const { classes, product } = this.props;
-        const { title, mainImage } = product;
+        const { title } = product;
+        const { selectedImage } = this.state;
 
         return (
             <Paper className={classes.root}>
@@ -40,13 +50,16 @@ class Overview extends Component {
                         <Paper>
                             <Image
                                 className={classes.mainImage}
-                                src={mainImage}
+                                src={selectedImage}
                                 alt={title}
                             />
                         </Paper>
                     </Grid>
                     <Grid item xs={4} className={classes.description}>
-                        <Description product={product} />
+                        <Description
+                            product={product}
+                            onImageSelect={(image) => {this.handleImageSelect(image)}}
+                        />
                     </Grid>
                 </Grid>
             </Paper>
