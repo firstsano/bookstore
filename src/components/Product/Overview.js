@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Paper } from '@material-ui/core';
+import {
+    includes,
+    first,
+    findIndex,
+    size
+} from 'lodash';
 
 import { productType } from '~/src/helpers/types';
 import Description from '~/src/components/Product/Description';
-import Image from '~/src/components/Image';
+import MainImage from '~/src/components/Gallery/MainImage';
 
 
 const styles = {
     root: {
         padding: '20px'
-    },
-    mainImage: {
-        width: '90%',
-        height: 'auto',
-        margin: 'auto',
-        display: 'block'
     },
     description: {
         flexGrow: 1
@@ -31,34 +31,51 @@ class Overview extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { selectedImage: props.product.mainImage };
+        const { product: { images } } = props;
+        this.state = {
+            images,
+            selectedImage: first(images)
+        };
+        this.selectImage = this.selectImage.bind(this);
     }
 
-    handleImageSelect(image) {
+    selectImage(image) {
+        const { images, selectedImage } = this.state;
+        if (selectedImage == image || !includes(images, image)) {
+            return false;
+        }
         this.setState({ selectedImage: image });
     }
 
+    nextImage(step = 1) {
+        const { images, selectedImage } = this.state;
+        let index = findIndex(images, (image) => (image == selectedImage)) + step;
+        if (index < 0) { index = size(images) - 1; }
+        if (index >= size(images)) { index = 0; }
+        this.setState({ selectedImage: images[index] })
+    }
+
     render() {
+        const { selectedImage } = this.state;
         const { classes, product } = this.props;
         const { title } = product;
-        const { selectedImage } = this.state;
 
         return (
             <Paper className={classes.root}>
                 <Grid container spacing={16}>
                     <Grid item xs={8}>
-                        <Paper>
-                            <Image
-                                className={classes.mainImage}
-                                src={selectedImage}
-                                alt={title}
-                            />
-                        </Paper>
+                        <MainImage
+                            image={selectedImage}
+                            title={title}
+                            onClickNext={(e) => this.nextImage(1)}
+                            onClickPrev={(e) => this.nextImage(-1)}
+                        />
                     </Grid>
                     <Grid item xs={4} className={classes.description}>
                         <Description
                             product={product}
-                            onImageSelect={(image) => {this.handleImageSelect(image)}}
+                            selectedImage={selectedImage}
+                            onImageSelect={this.selectImage}
                         />
                     </Grid>
                 </Grid>

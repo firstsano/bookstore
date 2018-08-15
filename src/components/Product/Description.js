@@ -3,14 +3,13 @@ import { withStyles } from '@material-ui/core/styles';
 import {
     Grid,
     Typography,
-    Divider,
 } from '@material-ui/core';
 
 import { Consumer } from '~/src/containers/CartContext';
 import { productType } from '~/src/helpers/types';
 import PurchaseControls from '~/src/components/Product/PurchaseControls';
 import Price from '~/src/components/Price';
-import Gallery from '~/src/components/Gallery';
+import Miniatures from '~/src/components/Gallery/Miniatures';
 
 
 const styles = (theme) => ({
@@ -51,7 +50,7 @@ class Description extends Component {
     }
 
     render() {
-        const { classes, product, onImageSelect } = this.props;
+        const { classes, product, onImageSelect, selectedImage } = this.props;
         const { title, price, images } = product;
 
         return (
@@ -64,8 +63,9 @@ class Description extends Component {
                     <Typography variant="title" className={classes.title} > {title} </Typography>
                 </Grid>
                 <Grid item className={classes.gallery}>
-                    <Gallery
+                    <Miniatures
                         images={images}
+                        selectedImage={selectedImage}
                         onImageSelect={onImageSelect}
                     />
                 </Grid>

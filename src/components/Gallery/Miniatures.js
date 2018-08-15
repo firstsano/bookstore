@@ -24,27 +24,20 @@ const styles = (theme) => ({
     }
 });
 
-class Gallery extends Component {
+class Miniatures extends Component {
     static get defaultProps() {
         return {
             images: []
         };
     }
 
-    constructor(props) {
-        super(props);
-        this.state = { selectedImage: null }
-    }
-
     handleClick(e) {
         const selectedImage = e.currentTarget.dataset.image;
-        this.setState({ selectedImage });
         this.props.onImageSelect(selectedImage);
     }
 
     render() {
-        const { selectedImage } = this.state;
-        const { classes, images } = this.props;
+        const { classes, images, selectedImage } = this.props;
         const imageCards = images.map((imageUrl) => {
             const isSelected = (imageUrl == selectedImage);
 
@@ -69,4 +62,4 @@ class Gallery extends Component {
     }
 }
 
-export default withStyles(styles)(Gallery);
+export default withStyles(styles)(Miniatures);
