@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-    Chip,
     Avatar,
     TableCell,
     TableRow,
@@ -8,6 +7,7 @@ import {
 
 import { cartItemType } from '~/src/helpers/types';
 import Price from '~/src/components/Price';
+import ProductChip from '~/src/components/Product/ProductChip';
 import Quantity from '~/src/components/Quantity';
 
 
@@ -19,15 +19,13 @@ class Row extends Component {
     }
 
     render() {
-        const { id, mainImage, title, quantity, totalPrice, price } = this.props.product;
+        const { product } = this.props;
+        const { id, quantity, totalPrice, price } = product;
 
         return (
             <TableRow key={id}>
                 <TableCell component="th" scope="row">
-                    <Chip
-                        avatar={<Avatar src={mainImage} />}
-                        label={title}
-                    />
+                    <ProductChip product={product} />
                 </TableCell>
                 <TableCell numeric>
                     <Price> {price} </Price>
