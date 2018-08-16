@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { createPortal } from 'react-dom';
 import { Grid, Paper } from '@material-ui/core';
 import {
     includes,
     first,
     findIndex,
-    size
+    size,
+    find
 } from 'lodash';
 
 import { productType } from '~/src/helpers/types';
@@ -51,21 +51,25 @@ class Overview extends Component {
 
     constructor(props) {
         super(props);
-        const { product: { images } } = props;
         this.state = {
-            images,
             isExpanded: false,
-            selectedImage: first(images)
+            selectedImage: first(this.props.product.images)
         };
         this.selectImage = this.selectImage.bind(this);
     }
 
-    selectImage(image) {
-        const { images, selectedImage } = this.state;
-        if (selectedImage == image || !includes(images, image)) {
+    get imageUrls() {
+        return this.props.product.images.map(image => image.url);
+    }
+
+    selectImage(imageUrl) {
+        const { images } = this.props.product;
+        let { selectedImage } = this.state;
+        if (selectedImage.url == imageUrl || !includes(this.imageUrls, imageUrl)) {
             return false;
         }
-        this.setState({ selectedImage: image });
+        selectedImage = find(images, (image) => (image.url == imageUrl));
+        this.setState({ selectedImage });
     }
 
     toggleGallery() {
@@ -74,7 +78,8 @@ class Overview extends Component {
     }
 
     nextImage(step = 1) {
-        const { images, selectedImage } = this.state;
+        const { images } = this.props.product;
+        const { selectedImage } = this.state;
         let index = findIndex(images, (image) => (image == selectedImage)) + step;
         if (index < 0) { index = size(images) - 1; }
         if (index >= size(images)) { index = 0; }
@@ -91,8 +96,9 @@ class Overview extends Component {
                 <Grid container spacing={16}>
                     <Grid item xs={8} className={classes.mainImage}>
                         <MainImage
-                            image={selectedImage}
+                            image={selectedImage.url}
                             title={title}
+                            source={selectedImage.id}
                             onClickNext={(e) => this.nextImage(1)}
                             onClickPrev={(e) => this.nextImage(-1)}
                             onClickExpand={(e) => this.toggleGallery()}
@@ -101,7 +107,8 @@ class Overview extends Component {
                     <Grid item xs={4} className={classes.description}>
                         <Description
                             product={product}
-                            selectedImage={selectedImage}
+                            selectedImage={selectedImage.url}
+                            images={this.imageUrls}
                             onImageSelect={this.selectImage}
                         />
                     </Grid>
@@ -114,7 +121,7 @@ class Overview extends Component {
                     >
                         <div className={classes.modalGallery}>
                             <MainImage
-                                image={selectedImage}
+                                image={selectedImage.url}
                                 title={title}
                                 onClickNext={(e) => this.nextImage(1)}
                                 onClickPrev={(e) => this.nextImage(-1)}
@@ -122,8 +129,8 @@ class Overview extends Component {
                         </div>
                         <div className={classes.modalMiniatures}>
                             <Miniatures
-                                images={product.images}
-                                selectedImage={selectedImage}
+                                selectedImage={selectedImage.url}
+                                images={this.imageUrls}
                                 onImageSelect={this.selectImage}
                             />
                         </div>

@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 
 import Overview from '~/src/components/Product/Overview';
 import { notFoundPath } from '~/src/helpers/routes/NotFoundRoute';
-import { getProduct } from '~/src/helpers/Contentful';
+import { getProduct } from '~/src/helpers/contentful';
 
 
 class ProductPage extends Component {

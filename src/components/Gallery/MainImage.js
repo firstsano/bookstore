@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Swipeable from 'react-swipeable';
 import {
@@ -8,6 +9,8 @@ import {
     Card,
     CardMedia
 } from '@material-ui/core';
+
+import { imagePath } from '~/src/helpers/routes/ImageRoute';
 
 
 const styles = {
@@ -38,6 +41,10 @@ const styles = {
     buttonRight: {
         right: 10
     },
+    buttonTop: {
+        top: 10,
+        marginTop: 'initial'
+    },
     buttonCenter: {
         top: 'initial',
         bottom: 10,
@@ -49,8 +56,8 @@ const styles = {
 class MainImage extends Component {    
     render() {
         const {
-            classes, image, title,
-            onClickNext, onClickPrev, onClickExpand
+            classes, image, title, source,
+            onClickNext, onClickPrev, onClickExpand, onClickSingleExpand
         } = this.props;
 
         return (
@@ -88,6 +95,19 @@ class MainImage extends Component {
                     >
                         <Icon>zoom_out_map_icon</Icon>
                     </Button>
+                }
+                {
+                    source &&
+                    <NavLink to={{ pathname: imagePath(source), state: { modal: true } }}>
+                        <Button
+                            mini
+                            variant="fab"
+                            color="primary"
+                            className={[classes.button, classes.buttonRight, classes.buttonTop].join(' ')}
+                        >
+                            <Icon>zoom_in_icon</Icon>
+                        </Button>
+                    </NavLink>
                 }
                 <Button
                     mini

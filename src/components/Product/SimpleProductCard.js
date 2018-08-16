@@ -48,7 +48,7 @@ class SimpleProductCard extends Component {
                 />
                 <CardMedia
                     className={classes.media}
-                    image={mainImage}
+                    image={mainImage.url}
                     title={title}
                 />
             </Card>

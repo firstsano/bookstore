@@ -28,6 +28,7 @@ class ProductCard extends Component {
 
     render() {
         const { product, classes } = this.props;
+        const { mainImage, title, price } = product;
 
         return (
             <Card
@@ -36,15 +37,15 @@ class ProductCard extends Component {
             >
                 <CardMedia
                     className={classes.media}
-                    image={product.mainImage}
-                    title={product.title}
+                    image={mainImage.url}
+                    title={title}
                 />
                 <CardContent>
                     <Grid container>
                         <Grid item xs={8}>
                             <ProductChip product={product} />
                             <Typography component="p">
-                                <Price currency="руб."> {product.price} </Price>
+                                <Price currency="руб."> {price} </Price>
                             </Typography>
                         </Grid>
                         <Grid container item xs={4}>

@@ -7,7 +7,7 @@ import { isEmpty } from 'lodash';
 import Catalog from '~/src/components/Catalog';
 import FavoriteProducts from '~/src/components/FavoriteProducts';
 import AutoSnack from '~/src/components/AutoSnack';
-import { getProducts, getFavoriteProducts } from '~/src/helpers/Contentful';
+import { getProducts, getFavoriteProducts } from '~/src/helpers/contentful';
 
 
 const styles = {

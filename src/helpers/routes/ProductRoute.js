@@ -10,7 +10,7 @@ export default {
     exact: true,
     strict: false,
     path: productPath(),
-    render: ({match}) => {
+    render: ({ match }) => {
         const { id } = match.params;
         return <ProductPage productId={id} />;
     }

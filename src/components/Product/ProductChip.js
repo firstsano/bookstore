@@ -26,7 +26,7 @@ class ProductChip extends Component {
 
         return (
             <Chip
-                avatar={<Avatar> <Image src={mainImage} height='50px' /> </Avatar>}
+                avatar={<Avatar> <Image src={mainImage.url} height='50px' /> </Avatar>}
                 label={
                     <NavLink
                         className={classes.link}

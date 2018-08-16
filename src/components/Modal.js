@@ -17,8 +17,8 @@ const styles = (theme) => ({
     },
     modal: {
         position: 'absolute',
-        width: 300,
-        height: 300,
+        width: '80%',
+        height: '80%',
         top: '50%',
         left: '50%',
         transform: `translate(-50%, -50%)`,

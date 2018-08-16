@@ -50,8 +50,8 @@ class Description extends Component {
     }
 
     render() {
-        const { classes, product, onImageSelect, selectedImage } = this.props;
-        const { title, price, images } = product;
+        const { classes, product, onImageSelect, selectedImage, images } = this.props;
+        const { title, price } = product;
 
         return (
             <Grid
