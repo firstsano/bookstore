@@ -1,15 +1,31 @@
 import React, { Component, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
+import { Paper, Divider } from '@material-ui/core';
+import { isEmpty } from 'lodash';
 
 import Catalog from '~/src/components/Catalog';
+import FavoriteProducts from '~/src/components/FavoriteProducts';
 import AutoSnack from '~/src/components/AutoSnack';
-import { getProducts } from '~/src/helpers/Contentful';
+import { getProducts, getFavoriteProducts } from '~/src/helpers/Contentful';
 
+
+const styles = {
+    paper: {
+        padding: 10
+    },
+    divider: {
+        margin: '20px 0'
+    }
+}
 
 class CatalogPage extends Component {
     constructor(props) {
         super(props);
-        this.state = { products: [] };
+        this.state = {
+            favoriteProducts: [],
+            products: []
+        };
     }
 
     componentDidMount() {
@@ -17,16 +33,29 @@ class CatalogPage extends Component {
     }
 
     async fetchProducts() {
-        const products = await getProducts();
-        this.setState({ products });
+        const [ products, favoriteProducts ] = await Promise.all([
+            getProducts(),
+            getFavoriteProducts()
+        ]);
+        this.setState({ products, favoriteProducts });
     }
 
     render() {
-        const { location } = this.props;
+        const { products, favoriteProducts } = this.state;
+        const { location, classes } = this.props;
 
+        if (isEmpty(products) || isEmpty(favoriteProducts)) {
+            return 'Загрузка...';
+        }
         return (
             <Fragment>
-                <Catalog products={this.state.products} />
+                <Paper className={classes.paper}>
+                    <FavoriteProducts products={favoriteProducts} />
+                </Paper>
+                <Divider className={classes.divider} />
+                <Paper className={classes.paper}>
+                    <Catalog products={products} />
+                </Paper>
                 {location.state && location.state.withMessage &&
                     <AutoSnack
                         duration={3000}
@@ -38,4 +67,4 @@ class CatalogPage extends Component {
     }
 }
 
-export default withRouter(CatalogPage);
+export default withRouter(withStyles(styles)(CatalogPage));

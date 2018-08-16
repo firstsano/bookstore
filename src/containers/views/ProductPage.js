@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 
 import Overview from '~/src/components/Product/Overview';
 import { notFoundPath } from '~/src/helpers/routes/NotFoundRoute';
-import { getProducts } from '~/src/helpers/Contentful';
+import { getProduct } from '~/src/helpers/Contentful';
 
 
 class ProductPage extends Component {
@@ -18,7 +18,7 @@ class ProductPage extends Component {
     }
 
     async fetchProduct() {
-        const products = await getProducts(this.props.productId);
+        const products = await getProduct(this.props.productId);
         if (isEmpty(products)) {
             this.setState({ product: false });
         }

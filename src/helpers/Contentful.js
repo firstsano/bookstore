@@ -32,12 +32,38 @@ const PATHES = {
     ASSET_URL: 'body.fields.file.url'
 };
 
-const productsRequest = function(productId) {
-    const url = `${SERVER}/spaces/${SPACE}/environments/${ENVIRONMENT}/entries`;
-    let query = { content_type: 'product' };
-    if (productId) {
-        query["fields.id[equals]"] = productId;
-    }
+const productsRequest = function() {
+    const url = `${SERVER}/spaces/${SPACE}/environments/${ENVIRONMENT}/entries`,
+          query = { content_type: 'product' }
+    ;
+    return request
+            .get(url)
+            .set(AUTH_HEADERS)
+            .query(query)
+    ;
+};
+
+const productRequest = function(id) {
+    const url = `${SERVER}/spaces/${SPACE}/environments/${ENVIRONMENT}/entries`,
+          query = {
+              content_type: 'product',
+              "fields.id[equals]": id
+          }
+    ;
+    return request
+            .get(url)
+            .set(AUTH_HEADERS)
+            .query(query)
+    ;
+};
+
+const favoriteProductRequest = function() {
+    const url = `${SERVER}/spaces/${SPACE}/environments/${ENVIRONMENT}/entries`,
+          query = {
+              content_type: 'product',
+              "fields.is_favorite[equals]": true
+          }
+    ;
     return request
             .get(url)
             .set(AUTH_HEADERS)
@@ -93,10 +119,25 @@ const setupProductImages = function (products, assets) {
     }
 }
 
-export const getProducts = async function(id) {
-    const response = await productsRequest(id);
+const fetchProducts = async function(request) {
+    const response = await request;
     const productItems = get(camelizeKeys(response), PATHES.ITEMS, []);
     const assetsIds = getAssetsIdsFromResponse(productItems)
     const assets = await loadAssets(assetsIds);
     return productsFromResponse(productItems, assets);
+}
+
+export const getProducts = async function() {
+    const request = productsRequest();
+    return await fetchProducts(request);
 };
+
+export const getProduct = async function(id) {
+    const request = productRequest(id);
+    return await fetchProducts(request);
+}
+
+export const getFavoriteProducts = async function() {
+    const request = favoriteProductRequest();
+    return await fetchProducts(request);
+}
