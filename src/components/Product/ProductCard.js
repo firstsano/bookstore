@@ -11,7 +11,6 @@ import {
 import Price from '~/src/components/Price';
 import ProductChip from './ProductChip';
 import PurchaseControls from './PurchaseControls';
-import { Consumer } from '~/src/containers/CartContext';
 
 
 const styles = {
@@ -49,9 +48,7 @@ class ProductCard extends Component {
                             </Typography>
                         </Grid>
                         <Grid container item xs={4}>
-                            <Consumer>
-                                {({addToCart}) => <PurchaseControls {...{addToCart, product}} />}
-                            </Consumer>
+                            <PurchaseControls product={product} />
                         </Grid>
                     </Grid>
                 </CardContent>

@@ -7,7 +7,6 @@ import {
     Grid
 } from '@material-ui/core';
 
-import { Consumer } from '~/src/containers/CartContext';
 import CartButton from '~/src/components/Cart/Button';
 import Menu from './Menu';
 
@@ -33,9 +32,7 @@ class Header extends Component {
                     </Grid>
                     <Grid item xs={4}>
                         <Toolbar className={classes.toolbar}>
-                            <Consumer>
-                                {({addToCart, products}) => <CartButton {...{addToCart, products}}/>}
-                            </Consumer>
+                            <CartButton />
                         </Toolbar>
                     </Grid>
                 </Grid>

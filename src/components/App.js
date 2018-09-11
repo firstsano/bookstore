@@ -6,7 +6,6 @@ import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import Layout from '~/src/components/Layout';
-import CartContainer from '~/src/containers/CartContext';
 import Header from '~/src/components/Header/Header';
 import ModalSwitch from '~/src/helpers/routes/ModalSwitch';
 import history from '~/src/helpers/History';
@@ -25,19 +24,17 @@ class App extends Component {
 
         return (
             <CssBaseline>
-                <CartContainer>
-                    <Layout>
-                        <Router history={history}>
-                            <Provider store={store}>
-                                <Fragment>
-                                    <Header title="Pragmatic Book Store" />
-                                    <Divider className={classes.divider} />
-                                    <ModalSwitch />
-                                </Fragment>
-                            </Provider>
-                        </Router>
-                    </Layout>
-                </CartContainer>
+                <Layout>
+                    <Router history={history}>
+                        <Provider store={store}>
+                            <Fragment>
+                                <Header title="Pragmatic Book Store" />
+                                <Divider className={classes.divider} />
+                                <ModalSwitch />
+                            </Fragment>
+                        </Provider>
+                    </Router>
+                </Layout>
             </CssBaseline>
         );
     }

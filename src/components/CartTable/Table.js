@@ -4,8 +4,8 @@ import {
     Table as BaseTable,
     TableBody
 } from '@material-ui/core';
+import { connect } from 'react-redux';
 
-import { Consumer } from '~/src/containers/CartContext';
 import Header from './Header';
 import Row from './Row';
 
@@ -17,11 +17,7 @@ class Table extends Component {
                 <BaseTable>
                     <Header />
                     <TableBody>
-                        <Consumer >
-                            {({products}) => (
-                                products.map(product => <Row key={product.id} product={product} />)
-                            )}
-                        </Consumer>
+                        { this.props.products.map(product => <Row key={product.id} product={product} />) }
                     </TableBody>
                 </BaseTable>
             </Paper>
@@ -29,4 +25,6 @@ class Table extends Component {
     }
 }
 
-export default Table;
+const mapStateToProps = ({cart: {products}}) => ({products});
+
+export default connect(mapStateToProps)(Table);

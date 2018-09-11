@@ -5,7 +5,6 @@ import {
     Typography,
 } from '@material-ui/core';
 
-import { Consumer } from '~/src/containers/CartContext';
 import { productType } from '~/src/helpers/types';
 import PurchaseControls from '~/src/components/Product/PurchaseControls';
 import Price from '~/src/components/Price';
@@ -76,15 +75,7 @@ class Description extends Component {
                     </Typography>
                 </Grid>
                 <Grid item>
-                    <Consumer>
-                        {({addToCart}) => (
-                            <PurchaseControls
-                                onlyButton
-                                addToCart={addToCart}
-                                product={product}
-                            />
-                        )}
-                    </Consumer>
+                    <PurchaseControls onlyButton product={product} />
                 </Grid>
             </Grid>
         );

@@ -6,7 +6,10 @@ import {
     Button,
     TextField
 } from '@material-ui/core';
-import _ from 'lodash';
+import { connect } from 'react-redux';
+import { isEmpty } from 'lodash';
+
+import { addToCart } from '~/src/actions/cart';
 
 
 const styles = {
@@ -37,13 +40,13 @@ class PurchaseControls extends Component {
     changeQuantity(e) {
         let value = e.target.value;
         value = value.replace(/\D/g, '');
-        const quantity = _.isEmpty(value) ? 0 : Number.parseInt(value);
+        const quantity = isEmpty(value) ? 0 : Number.parseInt(value);
         this.setState({ quantity });
     }
 
     addToCart() {
-        const { props: { product, addToCart }, state: { quantity } } = this;
-        addToCart(product, quantity);
+        const { addProductToCart, product } = this.props;
+        addProductToCart(product, this.state.quantity);
     }
 
     get onlyButtonStyles() {
@@ -93,4 +96,13 @@ class PurchaseControls extends Component {
     }
 }
 
-export default withStyles(styles)(PurchaseControls);
+const mapDispatchToProps = (dispatch) => {
+    return ({
+        addProductToCart(product, quantity) {
+            dispatch(addToCart(product, quantity));
+        },
+    });
+};
+
+const PurchaseControlsWithStyles = withStyles(styles)(PurchaseControls);
+export default connect(null, mapDispatchToProps)(PurchaseControlsWithStyles);

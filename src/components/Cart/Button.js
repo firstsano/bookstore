@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import CartIcon from '@material-ui/icons/ShoppingCart';
 import { IconButton, Badge } from '@material-ui/core';
+import { connect } from 'react-redux';
 import { sum } from 'lodash';
 
 import { cartPath } from '~/src/helpers/routes/CartRoute';
+import { addToCart } from '~/src/actions/cart';
 
 
 class Button extends Component {
@@ -28,16 +30,12 @@ class Button extends Component {
         this.setState({color: "inherit"});
         let product = event.dataTransfer.getData('text/plain');
         product = JSON.parse(product);
-        this.props.addToCart(product);
+        this.props.addProductToCart(product);
     }
 
     navigateToCart() {
         const { history } = this.props;
         history.push(cartPath());
-    }
-
-    addToCart(product) {
-        this.props.addToCart(product);
     }
 
     onDragLeave(event) {
@@ -69,4 +67,15 @@ class Button extends Component {
     }
 }
 
-export default withRouter(Button);
+const mapStateToProps = ({cart: {products}}) => ({products});
+
+const mapDispatchToProps = (dispatch) => {
+    return ({
+        addProductToCart(product) {
+            dispatch(addToCart(product));
+        },
+    });
+};
+
+const ButtonWithRouter = withRouter(Button);
+export default connect(mapStateToProps, mapDispatchToProps)(ButtonWithRouter);
