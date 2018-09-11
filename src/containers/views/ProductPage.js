@@ -1,40 +1,44 @@
 import React, { Component } from 'react';
-import { isEmpty, first } from 'lodash';
+import { first } from 'lodash';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Overview from '~/src/components/Product/Overview';
 import { notFoundPath } from '~/src/helpers/routes/NotFoundRoute';
-import { getProduct } from '~/src/helpers/contentful';
+import { fetchProducts } from '~/src/actions/catalog';
 
 
 class ProductPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { product: null }
-    }
-
     componentDidMount() {
-        this.fetchProduct();
-    }
-
-    async fetchProduct() {
-        const products = await getProduct(this.props.productId);
-        if (isEmpty(products)) {
-            this.setState({ product: false });
-        }
-        const product = first(products);
-        this.setState({ product });
+        this.props.loadProducts(this.props.productId);
     }
 
     render() {
-        const { product } = this.state;
-        if (product === null) {
+        const { isFetched, isLoading, product } = this.props;
+        if (!isFetched || isLoading) {
             return 'Загрузка...';
-        } else if (product === false) {
+        }
+        if (isFetched && !product) {
             return <Redirect to={{ pathname: notFoundPath() }}/>
         }
         return <Overview product={product} />;
     }
 }
 
-export default ProductPage;
+const mapStateToProps = (state) => {
+    return {
+        isLoading: state.catalog.isLoading,
+        isFetched: state.catalog.isFetched,
+        product: first(state.catalog.products),
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return ({
+        loadProducts(id) {
+            dispatch(fetchProducts(id));
+        }
+    });
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductPage);

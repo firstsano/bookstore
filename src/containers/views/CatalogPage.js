@@ -2,12 +2,14 @@ import React, { Component, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import { Paper, Divider } from '@material-ui/core';
+import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
 
 import Catalog from '~/src/components/Catalog';
 import FavoriteProducts from '~/src/components/FavoriteProducts';
 import AutoSnack from '~/src/components/AutoSnack';
-import { getProducts, getFavoriteProducts } from '~/src/helpers/contentful';
+import { fetchProducts } from '~/src/actions/catalog';
+import { fetchProducts as fetchGallery } from '~/src/actions/gallery';
 
 
 const styles = {
@@ -22,39 +24,33 @@ const styles = {
 class CatalogPage extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            favoriteProducts: [],
-            products: []
-        };
     }
 
     componentDidMount() {
-        this.fetchProducts();
-    }
-
-    async fetchProducts() {
-        const [ products, favoriteProducts ] = await Promise.all([
-            getProducts(),
-            getFavoriteProducts()
-        ]);
-        this.setState({ products, favoriteProducts });
+        this.props.loadProducts();
+        this.props.loadGallery();
     }
 
     render() {
-        const { products, favoriteProducts } = this.state;
-        const { location, classes } = this.props;
+        const {
+            location,
+            classes,
+            products,
+            favoriteProducts,
+            catalogLoading,
+            galleryLoading
+        } = this.props;
 
-        if (isEmpty(products) || isEmpty(favoriteProducts)) {
-            return 'Загрузка...';
-        }
         return (
             <Fragment>
                 <Paper className={classes.paper}>
-                    <FavoriteProducts products={favoriteProducts} />
+                    {galleryLoading && 'Загрузка...'}
+                    {!isEmpty(favoriteProducts) && <FavoriteProducts products={favoriteProducts} />}
                 </Paper>
                 <Divider className={classes.divider} />
                 <Paper className={classes.paper}>
-                    <Catalog products={products} />
+                    {catalogLoading && 'Загрузка...'}
+                    {!isEmpty(products) && <Catalog products={products} />}
                 </Paper>
                 {location.state && location.state.withMessage &&
                     <AutoSnack
@@ -67,4 +63,29 @@ class CatalogPage extends Component {
     }
 }
 
-export default withRouter(withStyles(styles)(CatalogPage));
+const mapStateToProps = (state) => {
+    return {
+        galleryLoading: state.gallery.isLoading,
+        favoriteProducts: state.gallery.products,
+        catalogLoading: state.catalog.isLoading,
+        products: state.catalog.products,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return ({
+        loadProducts() {
+            dispatch(fetchProducts());
+        },
+
+        loadGallery() {
+            dispatch(fetchGallery());
+        }
+    });
+};
+
+const CatalogPageWithStyles = withStyles(styles)(CatalogPage);
+const CatalogPageWithRouter = withRouter(CatalogPageWithStyles);
+const FinalCatalogPage = connect(mapStateToProps, mapDispatchToProps)(CatalogPageWithRouter);
+
+export default FinalCatalogPage;

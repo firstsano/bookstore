@@ -1,33 +1,28 @@
 import {
-    FETCH_PRODUCTS_REQUEST,
-    FETCH_PRODUCTS_SUCCESS,
-    FETCH_PRODUCTS_FAILURE
-} from '~/src/actions/catalog';
+    FETCH_GALLERY_REQUEST,
+    FETCH_GALLERY_SUCCESS,
+    FETCH_GALLERY_FAILURE
+} from '~/src/actions/gallery';
 
 
 const INITIAL_STATE = {
     isLoading: false,
-    isFetched: false,
     products: [],
-    favoriteProducts: []
 };
 
-const catalog = (state = INITIAL_STATE, action) => {
+const gallery = (state = INITIAL_STATE, action) => {
     switch(action.type) {
-        case FETCH_PRODUCTS_REQUEST:
+        case FETCH_GALLERY_REQUEST:
             return Object.assign({}, state, {
                 isLoading: true
             });
-        case FETCH_PRODUCTS_SUCCESS:
+        case FETCH_GALLERY_SUCCESS:
             return Object.assign({}, state, {
                 isLoading: false,
-                isFetched: true,
                 products: action.products,
-                favoriteProducts: action.favoriteProducts
             });
-        case FETCH_PRODUCTS_FAILURE:
+        case FETCH_GALLERY_FAILURE:
             return Object.assign({}, state, {
-                isFetched: true,
                 isLoading: false,
                 status: action.status
             });
@@ -36,4 +31,4 @@ const catalog = (state = INITIAL_STATE, action) => {
     }
 }
 
-export default catalog;
+export default gallery;
