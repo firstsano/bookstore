@@ -19,7 +19,7 @@ const gallery = (state = INITIAL_STATE, action) => {
         case FETCH_GALLERY_SUCCESS:
             return Object.assign({}, state, {
                 isLoading: false,
-                products: action.products,
+                products: action.response,
             });
         case FETCH_GALLERY_FAILURE:
             return Object.assign({}, state, {

@@ -1,53 +1,44 @@
-import {
-    getProduct,
-    getProducts,
-} from '~/src/helpers/contentful';
+import { CONTENTFUL_CALL } from '~/src/middleware/contentful';
 
 
-const
+export const
     FETCH_PRODUCTS_REQUEST = 'FETCH_PRODUCTS_REQUEST',
     FETCH_PRODUCTS_SUCCESS = 'FETCH_PRODUCTS_SUCCESS',
     FETCH_PRODUCTS_FAILURE = 'FETCH_PRODUCTS_FAILURE'
 ;
 
-function requestProducts() {
-    return ({
-        type: FETCH_PRODUCTS_REQUEST,
-    });
-}
+export const fetchProducts = () => ({
+    [CONTENTFUL_CALL]: {
+        method: 'getProducts',
+        types: [
+            FETCH_PRODUCTS_REQUEST,
+            FETCH_PRODUCTS_SUCCESS,
+            FETCH_PRODUCTS_FAILURE
+        ]
+    }
+});
 
-function fetchProductsSuccess(products) {
-    return ({
-        type: FETCH_PRODUCTS_SUCCESS,
-        products
-    });
-}
+export const fetchProduct = (productId) => ({
+    [CONTENTFUL_CALL]: {
+        method: 'getProduct',
+        params: [productId],
+        types: [
+            FETCH_PRODUCTS_REQUEST,
+            FETCH_PRODUCTS_SUCCESS,
+            FETCH_PRODUCTS_FAILURE
+        ]
+    }
+});
 
-function fetchProductsFailure() {
-    return ({
-        type: FETCH_PRODUCTS_FAILURE,
-    });
-}
+export const requestProducts = () => ({
+    type: FETCH_PRODUCTS_REQUEST,
+});
 
-const fetchProducts = function (productId) {
-    return function (dispatch) {
-        dispatch(requestProducts());
+export const fetchProductsSuccess = (response) => ({
+    type: FETCH_PRODUCTS_SUCCESS,
+    response
+});
 
-        const request = productId ? getProduct(productId) : getProducts();
-        return request
-            .then((products) => {
-                dispatch(fetchProductsSuccess(products));
-            })
-            .catch((errors) => {
-                dispatch(fetchProductsFailure(errors));
-            })
-        ;
-    };
-}
-
-export {
-    FETCH_PRODUCTS_REQUEST,
-    FETCH_PRODUCTS_SUCCESS,
-    FETCH_PRODUCTS_FAILURE,
-    fetchProducts,
-};
+export const fetchProductsFailure = () => ({
+    type: FETCH_PRODUCTS_FAILURE,
+});

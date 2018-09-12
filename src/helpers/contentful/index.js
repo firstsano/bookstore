@@ -1,6 +1,5 @@
 import { camelizeKeys } from 'humps';
 import {
-    set,
     get,
     first,
     uniq,

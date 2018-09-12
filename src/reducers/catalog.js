@@ -8,8 +8,7 @@ import {
 const INITIAL_STATE = {
     isLoading: false,
     isFetched: false,
-    products: [],
-    favoriteProducts: []
+    products: []
 };
 
 const catalog = (state = INITIAL_STATE, action) => {
@@ -22,8 +21,7 @@ const catalog = (state = INITIAL_STATE, action) => {
             return Object.assign({}, state, {
                 isLoading: false,
                 isFetched: true,
-                products: action.products,
-                favoriteProducts: action.favoriteProducts
+                products: action.response,
             });
         case FETCH_PRODUCTS_FAILURE:
             return Object.assign({}, state, {

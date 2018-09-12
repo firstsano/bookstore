@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import Overview from '~/src/components/Product/Overview';
 import { notFoundPath } from '~/src/helpers/routes/NotFoundRoute';
-import { fetchProducts } from '~/src/actions/catalog';
+import { fetchProduct } from '~/src/actions/catalog';
 
 
 class ProductPage extends Component {
@@ -36,7 +36,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return ({
         loadProducts(id) {
-            dispatch(fetchProducts(id));
+            dispatch(fetchProduct(id));
         }
     });
 };

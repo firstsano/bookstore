@@ -9,7 +9,7 @@ import Catalog from '~/src/components/Catalog';
 import FavoriteProducts from '~/src/components/FavoriteProducts';
 import AutoSnack from '~/src/components/AutoSnack';
 import { fetchProducts } from '~/src/actions/catalog';
-import { fetchProducts as fetchGallery } from '~/src/actions/gallery';
+import { fetchGallery } from '~/src/actions/gallery';
 
 
 const styles = {

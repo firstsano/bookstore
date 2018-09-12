@@ -1,49 +1,32 @@
-import { getFavoriteProducts } from '~/src/helpers/contentful';
+import { CONTENTFUL_CALL } from '~/src/middleware/contentful';
 
 
-const
+export const
     FETCH_GALLERY_REQUEST = 'FETCH_GALLERY_REQUEST',
     FETCH_GALLERY_SUCCESS = 'FETCH_GALLERY_SUCCESS',
     FETCH_GALLERY_FAILURE = 'FETCH_GALLERY_FAILURE'
 ;
 
-function requestProducts() {
-    return ({
-        type: FETCH_GALLERY_REQUEST,
-    });
-}
+export const fetchGallery = () => ({
+    [CONTENTFUL_CALL]: {
+        method: 'getFavoriteProducts',
+        types: [
+            FETCH_GALLERY_REQUEST,
+            FETCH_GALLERY_SUCCESS,
+            FETCH_GALLERY_FAILURE
+        ]
+    }
+});
 
-function fetchProductsSuccess(products) {
-    return ({
-        type: FETCH_GALLERY_SUCCESS,
-        products,
-    });
-}
+export const requestGallery = () => ({
+    type: FETCH_GALLERY_REQUEST,
+});
 
-function fetchProductsFailure() {
-    return ({
-        type: FETCH_GALLERY_FAILURE,
-    });
-}
+export const fetchGallerySuccess = (response) => ({
+    type: FETCH_GALLERY_SUCCESS,
+    response
+});
 
-const fetchProducts = function () {
-    return function (dispatch) {
-        dispatch(requestProducts());
-
-        return getFavoriteProducts()
-            .then((products) => {
-                dispatch(fetchProductsSuccess(products));
-            })
-            .catch((errors) => {
-                dispatch(fetchProductsFailure(errors));
-            })
-        ;
-    };
-}
-
-export {
-    FETCH_GALLERY_REQUEST,
-    FETCH_GALLERY_SUCCESS,
-    FETCH_GALLERY_FAILURE,
-    fetchProducts,
-};
+export const fetchGalleryFailure = () => ({
+    type: FETCH_GALLERY_FAILURE
+});
