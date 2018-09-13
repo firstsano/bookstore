@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 
 import CartTable from '~/src/components/CartTable/Table';
+import OrderForm from '~/src/components/OrderForm';
 
 
 const styles = {
@@ -24,6 +25,8 @@ class CartPage extends Component {
                     Ваша корзина:
                 </Typography>
                 <CartTable />
+                <br />
+                <OrderForm />
             </Fragment>
         );
     }
