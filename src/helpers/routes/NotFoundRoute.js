@@ -1,6 +1,6 @@
 import React from 'react';
 
-import NotFoundPage from '~/src/containers/views/NotFoundPage';
+import NotFoundPage from '~/src/views/NotFoundPage';
 
 
 export const notFoundPath = () => `/404`;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ProductPage from '~/src/containers/views/ProductPage';
+import ProductPage from '~/src/views/ProductPage';
 
 
 export const productPath = (id = ':id') => `/products/${id}`;

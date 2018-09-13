@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { isEmpty } from 'lodash';
 import { connect } from 'react-redux';
 
-import CartPage from '~/src/containers/views/CartPage';
+import CartPage from '~/src/views/CartPage';
 import { catalogPath } from './CatalogRoute';
 
 

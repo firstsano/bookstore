@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ContactsPage from '~/src/containers/views/ContactsPage';
+import ContactsPage from '~/src/views/ContactsPage';
 
 
 export const contactsPath = () => `/contacts`;

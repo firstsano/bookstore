@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CatalogPage from '~/src/containers/views/CatalogPage';
+import CatalogPage from '~/src/views/CatalogPage';
 
 
 export const catalogPath = () => '/';

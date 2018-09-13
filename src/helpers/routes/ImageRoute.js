@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ImagePage from '~/src/containers/views/ImagePage';
+import ImagePage from '~/src/views/ImagePage';
 
 
 export const imagePath = (id = ':id') => `/img/${id}`;
