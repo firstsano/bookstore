@@ -8,7 +8,7 @@ const mapStateToProps = ({catalog}) => {
     return {
         isFetched: catalog.isFetched,
         isLoading: catalog.isLoading,
-        products: catalog.products,
+        products: catalog.filteredProducts,
     };
 };
 
