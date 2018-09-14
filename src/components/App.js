@@ -6,7 +6,7 @@ import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import Layout from '~/src/components/Layout';
-import Header from '~/src/components/Header/Header';
+import Header from '~/src/components/Header';
 import ModalSwitch from '~/src/helpers/routes/ModalSwitch';
 import history from '~/src/helpers/History';
 import store from '~/src/store';

@@ -5,8 +5,8 @@ export const CONTENTFUL_CALL = 'CONTENTFUL_CALL';
 
 export default store => next => action => {
     if (!action[CONTENTFUL_CALL]) {
-        next(action);
-        return;
+        const response = next(action);
+        return response;
     }
 
     const {

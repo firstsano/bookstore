@@ -15,9 +15,18 @@ const styles = {
 };
 
 class Catalog extends Component {
+    componentDidMount() {
+        this.props.loadProducts();
+    }
+
     render() {
-        const { products, classes } = this.props;
-        const productsList = products.map((product, index) =>
+        const { isFetched, products = [], classes } = this.props;
+
+        if (!isFetched) {
+            return 'Загрузка...';
+        }
+
+        const productsList = products.map((product) =>
             <Grid item component='li' className={classes.listItem} key={product.id} xs={4}>
                 <ProductCard product={product} />
             </Grid>

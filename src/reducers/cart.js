@@ -51,7 +51,6 @@ const cart = (state = INITIAL_STATE, action) => {
             });
 
         case REMOVE_ITEM_FROM_CART:
-            debugger;
             delete list[item.id];
             return Object.assign({}, state, { list }, {
                 products: listToProducts(list)

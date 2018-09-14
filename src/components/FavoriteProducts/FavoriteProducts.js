@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { Button, Icon } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { first, size, findIndex } from 'lodash';
+import {
+    first,
+    size,
+    findIndex
+} from 'lodash';
 
 import SimpleProductCard from '~/src/components/Product/SimpleProductCard';
 
@@ -24,29 +28,28 @@ const styles = {
     },
 };
 
-let timer = null;
-
 const TIMEOUT = 5000;
 
 class FavoriteProducts extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            current: first(props.products)
-        };
+        this.timer = null;
+        this.state = { current: null };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        await this.props.loadGallery();
+        this.setState({current: first(this.props.products)})
         this.delayNextProduct();
     }
 
     componentWillUnmount() {
-        clearTimeout(timer);
+        clearTimeout(this.timer);
     }
 
     delayNextProduct() {
-        clearTimeout(timer);
-        timer = setTimeout(() => {
+        clearTimeout(this.timer);
+        this.timer = setTimeout(() => {
             this.nextProduct();
             this.delayNextProduct();
         }, TIMEOUT);
@@ -68,7 +71,11 @@ class FavoriteProducts extends Component {
 
     render() {
         const { current: product } = this.state;
-        const { classes } = this.props;
+        const { classes, isFetched } = this.props;
+
+        if (!isFetched || !product) {
+            return 'Загрузка...';
+        }
 
         return (
             <div className={classes.root}>
@@ -78,7 +85,7 @@ class FavoriteProducts extends Component {
                     variant="fab"
                     color="primary"
                     className={[classes.button, classes.buttonRight].join(' ')}
-                    onClick={(e) => this.handleNextProduct(1)}
+                    onClick={() => this.handleNextProduct(1)}
                 >
                     <Icon>navigate_next_icon</Icon>
                 </Button>
@@ -87,7 +94,7 @@ class FavoriteProducts extends Component {
                     variant="fab"
                     color="primary"
                     className={[classes.button, classes.buttonLeft].join(' ')}
-                    onClick={(e) => this.handleNextProduct(-1)}
+                    onClick={() => this.handleNextProduct(-1)}
                 >
                     <Icon>navigate_before_icon</Icon>
                 </Button>

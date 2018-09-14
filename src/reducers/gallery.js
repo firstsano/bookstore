@@ -7,6 +7,7 @@ import {
 
 const INITIAL_STATE = {
     isLoading: false,
+    isFetched: false,
     products: [],
 };
 
@@ -19,11 +20,13 @@ const gallery = (state = INITIAL_STATE, action) => {
         case FETCH_GALLERY_SUCCESS:
             return Object.assign({}, state, {
                 isLoading: false,
+                isFetched: true,
                 products: action.response,
             });
         case FETCH_GALLERY_FAILURE:
             return Object.assign({}, state, {
                 isLoading: false,
+                isFetched: true,
                 status: action.status
             });
         default:

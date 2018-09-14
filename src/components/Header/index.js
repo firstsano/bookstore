@@ -7,7 +7,7 @@ import {
     Grid
 } from '@material-ui/core';
 
-import CartButton from '~/src/components/Cart/Button';
+import CartButton from '~/src/components/CartButton';
 import Menu from './Menu';
 
 

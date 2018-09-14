@@ -18,8 +18,8 @@ const APICall = (root, endpoint, headers, method, query, payload) => {
 
 export default store => next => action => {
     if (!action[API_CALL]) {
-        next(action);
-        return;
+        const response = next(action);
+        return response;
     }
 
     const {
