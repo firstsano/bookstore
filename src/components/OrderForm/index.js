@@ -17,7 +17,7 @@ import { clearCart } from '~/src/actions/cart';
 import { errorsToReduxErrors } from '~/src/helpers/contentful';
 
 
-// validate address by server side
+// validate address by server
 const validate = (values) => {
     const errors = Object.assign({},
         validateEmail(values, ['email']),
@@ -28,8 +28,12 @@ const validate = (values) => {
     return errors;
 };
 
+const mapStateToProps = ({cart: {products}}) => ({products});
+
 const mapDispatchToProps = (dispatch) => ({
-    onSubmit(values) {
+    onSubmit(values, _, props) {
+        const productLinks = props.products.map(item => ({[item.id]: item.quantity}));
+        values.productLinks = productLinks;
         return dispatch(sendOrder(values)).then((data) => {
             const { id, version } = data.body.sys;
             return dispatch(validateOrder(id, version))
@@ -49,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
     }
 });
 
-export default connect(null, mapDispatchToProps)(
+export default connect(mapStateToProps, mapDispatchToProps)(
     reduxForm({
         form: 'order',
         destroyOnUnmount: true,
