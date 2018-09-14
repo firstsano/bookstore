@@ -1,17 +1,14 @@
 import request from 'superagent';
 
-import SETTINGS from '~/src/constants/Settings';
+import {
+    ACCESS_URL,
+    ACCESS_HEADERS as AUTH_HEADERS,
+} from './settings';
 
 
-const { ACCESS_TOKEN, SPACE, ENVIRONMENT } = SETTINGS;
-const SERVER = 'https://cdn.contentful.com',
-      AUTH_HEADERS = {
-          'Content-type': 'application/json',
-          'Authorization': `Bearer ${ACCESS_TOKEN}`
-      },
-      BASE_URL = `${SERVER}/spaces/${SPACE}/environments/${ENVIRONMENT}`,
-      ENTRIES_URL = `${BASE_URL}/entries`,
-      ASSETS_URL = `${BASE_URL}/assets`
+const
+    ASSETS_URL = `${ACCESS_URL}/assets`,
+    ENTRIES_URL = `${ACCESS_URL}/entries`
 ;
 
 export const productsRequest = function() {

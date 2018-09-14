@@ -3,7 +3,8 @@ import { LOCAL_STORAGE } from '~/src/middleware/localStorage';
 
 export const
     ADD_TO_CART = 'ADD_TO_CART',
-    INITIALIZE_CART = 'INITIALIZE_CART'
+    INITIALIZE_CART = 'INITIALIZE_CART',
+    CLEAR_CART = 'CLEAR_CART'
 ;
 
 export const addToCart = (item, quantity = 1) => ({
@@ -15,4 +16,9 @@ export const addToCart = (item, quantity = 1) => ({
 
 export const initializeCart = () => ({
     type: INITIALIZE_CART
+});
+
+export const clearCart = () => ({
+    [LOCAL_STORAGE]: { source: 'cart' },
+    type: CLEAR_CART
 });

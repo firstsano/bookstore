@@ -2,7 +2,9 @@ const SETTINGS = {
     SPACE: '9zurd4fu9k11',
     ENVIRONMENT: 'master',
     ACCESS_TOKEN: '25769c40871799a3f981a3f49f18ae30798a287557ea54d56f770b362ee75e9a',
-    PRODUCT_ATTRIBUTES: ['id', 'title', 'price']
+    MANAGEMENT_TOKEN: 'CFPAT-4faf98480228f1996008462c40f5367f0f3a05d0091d5df8a049699ee6d5ee6d',
+    PRODUCT_ATTRIBUTES: ['id', 'title', 'price'],
+    DEFAULT_LOCALE: 'en-US'
 }
 
 export default SETTINGS;

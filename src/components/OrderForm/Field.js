@@ -3,6 +3,8 @@ import { TextField, Grid } from '@material-ui/core';
 import { Field as BaseField } from 'redux-form';
 import { withStyles } from '@material-ui/core';
 
+import { isEmpty } from 'lodash';
+
 
 const styles = {
     icon: {
@@ -13,7 +15,7 @@ const styles = {
 
 const renderTextField = ({input, meta: { touched, error }, fieldProps}) => (
     <TextField
-        error={touched && error}
+        error={touched && !isEmpty(error)}
         helperText={touched && error}
         margin="normal"
         {...input}

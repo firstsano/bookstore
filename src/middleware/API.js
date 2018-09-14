@@ -2,13 +2,16 @@ import request from 'superagent';
 
 export const API_CALL = 'API_CALL';
 
-const APICall = (root, endpoint, method, query, payload) => {
+const APICall = (root, endpoint, headers, method, query, payload) => {
     let r = request[method.toLowerCase()](`${root}${endpoint}`);
+    if (headers) {
+        r = r.set(headers);
+    }
     if (query) {
         r = r.query(query);
     }
     if (payload) {
-        r = r.payload(payload);
+        r = r.send(payload);
     }
     return r;
 };
@@ -22,6 +25,7 @@ export default store => next => action => {
     const {
         root,
         endpoint,
+        headers,
         method,
         types,
         query,
@@ -41,8 +45,8 @@ export default store => next => action => {
     const promise = APICall(
         root,
         endpoint,
+        headers,
         method,
-        types,
         query,
         payload
     );

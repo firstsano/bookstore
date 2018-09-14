@@ -6,7 +6,7 @@ import {
     flattenDeep
 } from 'lodash';
 
-import SETTINGS from '~/src/constants/Settings';
+import SETTINGS from '~/src/settings';
 import {
     productsRequest,
     productRequest,
@@ -16,7 +16,7 @@ import {
 } from './requests';
 
 
-const { PRODUCT_ATTRIBUTES } = SETTINGS;
+const { PRODUCT_ATTRIBUTES, DEFAULT_LOCALE } = SETTINGS;
 
 const productsFromResponse = function(response, assets) {
     const products = [];
@@ -82,3 +82,12 @@ export const getImage = async function(id) {
     const imageResponse = await request;
     return get(imageResponse, 'body.fields.file.url');
 }
+
+export const propsToPayload = (object, locale = DEFAULT_LOCALE) => {
+    const properties = Object.keys(object);
+    const payload = {'fields': {}};
+    for (let property of properties) {
+        payload.fields[property] = { [locale]: object[property] };
+    }
+    return payload;
+};
