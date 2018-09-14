@@ -3,6 +3,7 @@ import {
     Card,
     CardContent,
     CardActions,
+    Divider,
     Button,
     Grid
 } from '@material-ui/core';
@@ -27,6 +28,7 @@ class Layout extends Component {
                             {children}
                         </Grid>
                     </CardContent>
+                    <Divider />
                     <CardActions>
                         <Button
                             onClick={handleSubmit}
