@@ -2,6 +2,7 @@ import { camelizeKeys } from 'humps';
 import {
     get,
     first,
+    last,
     uniq,
     flattenDeep
 } from 'lodash';
@@ -90,4 +91,13 @@ export const propsToPayload = (object, locale = DEFAULT_LOCALE) => {
         payload.fields[property] = { [locale]: object[property] };
     }
     return payload;
+};
+
+export const errorsToReduxErrors = (errors) => {
+    const reduxErrors = {};
+    for (let error of errors) {
+        const property = last(error.path);
+        reduxErrors[property] = error.details;
+    }
+    return reduxErrors;
 };

@@ -16,7 +16,6 @@ export const
         'Authorization': `Bearer ${ACCESS_TOKEN}`
     },
     MANAGEMENT_HEADERS = {
-        'Content-type': 'application/vnd.contentful.management.v1+json',
         'Authorization': `Bearer ${MANAGEMENT_TOKEN}`
     },
     ACCESS_URL = `${ACCESS_SERVER}/spaces/${SPACE}/environments/${ENVIRONMENT}`,
