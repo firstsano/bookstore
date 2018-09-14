@@ -15,6 +15,7 @@ class Header extends Component {
                     <TableCell numeric> Цена </TableCell>
                     <TableCell numeric> Количество </TableCell>
                     <TableCell numeric> Общая цена </TableCell>
+                    <TableCell> </TableCell>
                 </TableRow>
             </TableHead>
         );
