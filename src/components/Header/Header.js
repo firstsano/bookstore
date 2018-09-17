@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {
     AppBar,
@@ -12,11 +12,14 @@ import CartButton from '~/src/components/CartButton';
 import Menu from './Menu';
 
 
-const styles = theme => ({
+const styles = {
     toolbar: {
         'flex-direction': 'row-reverse'
+    },
+    divider: {
+        margin: '20px 0'
     }
-});
+};
 
 class Header extends Component {
     constructor(props) {
@@ -34,29 +37,32 @@ class Header extends Component {
         const { classes, title } = this.props;
 
         return (
-            <AppBar position="static">
-                <Grid container>
-                    <Grid item xs={8}>
-                        <Toolbar>
-                            <Menu />
-                            <Typography variant="title" color="inherit"> {title} </Typography>
-                        </Toolbar>
+            <Fragment>
+                <AppBar position="static">
+                    <Grid container>
+                        <Grid item xs={8}>
+                            <Toolbar>
+                                <Menu />
+                                <Typography variant="title" color="inherit"> {title} </Typography>
+                            </Toolbar>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <Toolbar>
+                                <SearchInput
+                                    value={this.state.search}
+                                    onChange={(e) => this.handleSearchChange(e)}
+                                />
+                            </Toolbar>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <Toolbar className={classes.toolbar}>
+                                <CartButton />
+                            </Toolbar>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={2}>
-                        <Toolbar>
-                            <SearchInput
-                                value={this.state.search}
-                                onChange={(e) => this.handleSearchChange(e)}
-                            />
-                        </Toolbar>
-                    </Grid>
-                    <Grid item xs={2}>
-                        <Toolbar className={classes.toolbar}>
-                            <CartButton />
-                        </Toolbar>
-                    </Grid>
-                </Grid>
-            </AppBar>
+                </AppBar>
+                <Divider className={classes.divider} />
+            </Fragment>
         );
     }
 }

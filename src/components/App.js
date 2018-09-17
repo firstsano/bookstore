@@ -1,7 +1,4 @@
-import React, { Component, Fragment } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { Divider } from '@material-ui/core';
+import React, { Fragment } from 'react';
 import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
@@ -10,34 +7,20 @@ import Header from '~/src/components/Header';
 import ModalSwitch from '~/src/helpers/routes/ModalSwitch';
 import history from '~/src/helpers/history';
 import store from '~/src/store';
+import { historyCb } from '~/src/helpers/prepareData';
 
 
-const styles = () => ({
-    divider: {
-        margin: '20px 0'
-    }
-});
+history.listen(historyCb);
 
-class App extends Component {
-    render() {
-        const { classes } = this.props;
-
-        return (
-            <CssBaseline>
-                <Layout>
-                    <Router history={history}>
-                        <Provider store={store}>
-                            <Fragment>
-                                <Header title="Pragmatic Book Store" />
-                                <Divider className={classes.divider} />
-                                <ModalSwitch />
-                            </Fragment>
-                        </Provider>
-                    </Router>
-                </Layout>
-            </CssBaseline>
-        );
-    }
-}
-
-export default withStyles(styles)(App);
+export default () => (
+    <Layout>
+        <Router history={history}>
+            <Provider store={store}>
+                <Fragment>
+                    <Header title="Pragmatic Book Store" />
+                    <ModalSwitch />
+                </Fragment>
+            </Provider>
+        </Router>
+    </Layout>
+);
