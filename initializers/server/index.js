@@ -1,10 +1,12 @@
+global.__SERVER__ = true;
+
 const express = require('express');
 
 const path = require('path');
 
 const app = express();
 
-const manifest = require('./../../public/assets/manifest.json').default;
+const manifest = require('./../../public/assets/manifest.json');
 
 const webpackAsset = (bundle) => manifest[bundle];
 

@@ -53,5 +53,9 @@ module.exports = {
 
     plugins: [
         new ManifestPlugin(),
+        new webpack.DefinePlugin({
+            __SERVER__: false,
+            __CLIENT__: true
+        })
     ]
 }

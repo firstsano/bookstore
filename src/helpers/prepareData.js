@@ -3,9 +3,10 @@ import { parse } from 'qs';
 import { isUndefined } from 'lodash';
 
 import routes from '~/src/helpers/routes';
+import store from '~/src/store';
 
 
-export const historyCb = (location, action) => {
+export const historyCb = (location) => {
     const state = {
         routes: [],
         params: {},
@@ -21,10 +22,10 @@ export const historyCb = (location, action) => {
         }
     }
 
-    prepareData(store, state);
+    prepareData(state);
 };
 
-export const prepareData = (store, state) => {
+export const prepareData = (state) => {
     const { query, params, routes } = state;
     const prepareDataFns = routes.map(route => route.prepareData).filter(fn => !isUndefined(fn));
     return Promise.all(prepareDataFns.map(fn => fn(store, query, params, routes)));
