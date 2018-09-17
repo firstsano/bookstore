@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import { get } from 'lodash';
 
 import routes from '~/src/helpers/routes';
-import history from '~/src/helpers/History';
+import history from '~/src/helpers/history';
 import Modal from '~/src/components/Modal';
 
 

@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import Layout from '~/src/components/Layout';
 import Header from '~/src/components/Header';
 import ModalSwitch from '~/src/helpers/routes/ModalSwitch';
-import history from '~/src/helpers/History';
+import history from '~/src/helpers/history';
 import store from '~/src/store';
 
 
