@@ -1,7 +1,8 @@
 {
     "plugins": [
         "lodash",
-        "transform-async-to-generator"
+        "transform-async-to-generator",
+        "@babel/plugin-transform-runtime"
     ],
     "presets": [
         "@babel/env",
