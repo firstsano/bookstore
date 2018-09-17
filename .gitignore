@@ -3,6 +3,11 @@ node_modules
 
 # Ignore build files
 dist
+public/assets
+serverApp
 
 # Ignore cache files
 .cache
+
+# Ignore deploy folder
+_deploy
