@@ -4,7 +4,8 @@ import {
     AppBar,
     Toolbar,
     Typography,
-    Grid
+    Grid,
+    Divider
 } from '@material-ui/core';
 import SearchInput from './SearchInput';
 
