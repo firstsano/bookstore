@@ -4,7 +4,7 @@
         "transform-async-to-generator"
     ],
     "presets": [
-        "env",
-        "react"
+        "@babel/env",
+        "@babel/react"
     ]
 }
