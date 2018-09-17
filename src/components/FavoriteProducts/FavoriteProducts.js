@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Button, Icon } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import {
-    first,
     size,
-    findIndex
+    findIndex,
+    max,
 } from 'lodash';
 
 import SimpleProductCard from '~/src/components/Product/SimpleProductCard';
@@ -34,12 +34,10 @@ class FavoriteProducts extends Component {
     constructor(props) {
         super(props);
         this.timer = null;
-        this.state = { current: null };
+        this.state = { index: 0 };
     }
 
-    async componentDidMount() {
-        await this.props.loadGallery();
-        this.setState({current: first(this.props.products)})
+    componentDidMount() {
         this.delayNextProduct();
     }
 
@@ -56,12 +54,11 @@ class FavoriteProducts extends Component {
     }
 
     nextProduct(step = 1) {
-        const { products } = this.props;
-        const { current } = this.state;
-        let index = findIndex(products, (product) => (product == current)) + step;
-        if (index < 0) { index = size(products) - 1; }
-        if (index >= size(products)) { index = 0; }
-        this.setState({ current: products[index] })
+        const length = max([size(this.props.products || []) - 1, 0]);
+        let index = this.state.index + step;
+        if (index < 0) { index = length; }
+        if (index > length) { index = 0; }
+        this.setState({ index });
     }
 
     handleNextProduct(step = 1) {
@@ -70,8 +67,8 @@ class FavoriteProducts extends Component {
     }
 
     render() {
-        const { current: product } = this.state;
-        const { classes, isFetched } = this.props;
+        const { classes, isFetched, products } = this.props;
+        const product = products[this.state.index];
 
         if (!isFetched || !product) {
             return 'Загрузка...';

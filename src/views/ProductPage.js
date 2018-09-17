@@ -5,14 +5,9 @@ import { connect } from 'react-redux';
 
 import Overview from '~/src/components/Product/Overview';
 import { notFoundPath } from '~/src/helpers/routes/NotFoundRoute';
-import { fetchProduct } from '~/src/actions/catalog';
 
 
 class ProductPage extends Component {
-    componentDidMount() {
-        this.props.loadProducts(this.props.productId);
-    }
-
     render() {
         const { isFetched, isLoading, product } = this.props;
         if (!isFetched || isLoading) {
@@ -33,12 +28,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return ({
-        loadProducts(id) {
-            dispatch(fetchProduct(id));
-        }
-    });
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProductPage);
+export default connect(mapStateToProps)(ProductPage);

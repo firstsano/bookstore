@@ -11,6 +11,7 @@ import { historyCb } from '~/src/helpers/prepareData';
 
 
 history.listen(historyCb);
+historyCb(window.location, 'PUSH');
 
 export default () => (
     <Layout>

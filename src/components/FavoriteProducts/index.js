@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 
-import { fetchGallery } from '~/src/actions/gallery';
 import FavoriteProducts from './FavoriteProducts';
 
 
@@ -12,12 +11,4 @@ const mapStateToProps = ({gallery}) => {
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return ({
-        loadGallery() {
-            return dispatch(fetchGallery());
-        }
-    });
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(FavoriteProducts);
+export default connect(mapStateToProps)(FavoriteProducts);

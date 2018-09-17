@@ -15,10 +15,6 @@ const styles = {
 };
 
 class Catalog extends Component {
-    componentDidMount() {
-        this.props.loadProducts();
-    }
-
     render() {
         const { isFetched, products = [], classes } = this.props;
 
