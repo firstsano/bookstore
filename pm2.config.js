@@ -9,7 +9,7 @@ module.exports = {
     deploy: {
         production: {
             host: ['localhost'],
-            ref: 'origin/master',
+            ref: 'origin/ConfigDeploy',
             repo: 'git@github.com:ipcross/group4.git',
             'post-deploy': 'npm install && npm run build:all && pm2 startOrRestart pm2.config.js --env production',
             path: process.cwd() + '/_deploy',
