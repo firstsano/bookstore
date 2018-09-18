@@ -2,8 +2,8 @@ import React, { Component, createRef } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { createPortal } from 'react-dom';
 
+import clientComponent from '~/src/helpers/clientComponent';
 
-const modalRoot = document.getElementById('modal-root');
 
 const styles = (theme) => ({
     layout: {
@@ -38,7 +38,8 @@ class Modal extends Component {
     }
 
     render() {
-        const { classes, className, onLayoutClick } = this.props;
+        const { classes, className } = this.props;
+        const modalRoot = document.getElementById('modal-root');
         const modal =
             <div
                 ref={this.layout}
@@ -55,4 +56,4 @@ class Modal extends Component {
     }
 }
 
-export default withStyles(styles)(Modal);
+export default clientComponent(withStyles(styles)(Modal));

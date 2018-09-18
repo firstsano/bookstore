@@ -12,6 +12,10 @@ class Button extends Component {
         this.state = { color: "inherit" };
     }
 
+    componentDidMount() {
+        this.props.initializeProductCart();
+    }
+
     get cartSize() {
         const products = this.props.products;
         return sum(products.map(p => p.quantity));

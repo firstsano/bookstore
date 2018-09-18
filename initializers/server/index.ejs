@@ -4,10 +4,12 @@
         <title>Book Store</title>
         <!-- Install Material Icon Font -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <style id="jss-server-side"><%- generatedCss %></style>
     </head>
     <body>
-        <div id="root"></div>
+        <div id="root"><%- content %></div>
         <div id="modal-root"></div>
+        <script> window.__INITIAL_STATE__ = <%- initialState %> </script>
         <script src="<%- webpackAsset('bundle.js') %>"></script>
     </body>
 </html>

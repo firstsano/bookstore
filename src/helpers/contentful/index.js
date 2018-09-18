@@ -46,8 +46,7 @@ const getAssetsIdsFromResponse = function(response) {
 
 const loadAssets = async function(ids) {
     let assetsResponse = await assetsRequest(ids);
-    assetsResponse = camelizeKeys(assetsResponse);
-    const assetsInfo = get(assetsResponse, 'body.items');
+    const assetsInfo = camelizeKeys(get(assetsResponse, 'body.items'));
     return Object.assign({},
         ...assetsInfo.map(info => ({
             [get(info, 'sys.id')]: get(info, 'fields.file.url')
@@ -57,7 +56,7 @@ const loadAssets = async function(ids) {
 
 const fetchProducts = async function(request) {
     const response = await request;
-    const productItems = get(camelizeKeys(response), 'body.items', []);
+    const productItems = camelizeKeys(get(response, 'body.items', []));
     const assetsIds = uniq(getAssetsIdsFromResponse(productItems));
     const assets = await loadAssets(assetsIds);
     return productsFromResponse(productItems, assets);
