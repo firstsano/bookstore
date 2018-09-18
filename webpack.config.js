@@ -4,6 +4,8 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 
 const webpack = require('webpack');
 
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 module.exports = {
     mode: 'development',
 
@@ -35,8 +37,13 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.css/,
-                loaders: ['style-loader', 'css-loader']
+                test: /\.css$/,
+                use: [
+                  {
+                    loader: MiniCssExtractPlugin.loader,
+                  },
+                  "css-loader"
+                ]
             },
             {
                 test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
@@ -56,6 +63,10 @@ module.exports = {
         new webpack.DefinePlugin({
             __SERVER__: false,
             __CLIENT__: true
+        }),
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+            chunkFilename: "[id].css"
         })
     ]
 }
