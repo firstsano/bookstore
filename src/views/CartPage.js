@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
+import { Helmet } from "react-helmet";
 
 import CartTable from '~/src/components/CartTable/Table';
 import OrderForm from '~/src/components/OrderForm';
@@ -18,6 +19,10 @@ class CartPage extends Component {
 
         return (
             <Fragment>
+                <Helmet>
+                    <title> Ваша корзина </title>
+                </Helmet>
+
                 <Typography
                     variant="title"
                     className={classes.title}

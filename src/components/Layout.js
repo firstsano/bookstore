@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
+import { Helmet } from "react-helmet";
 
 
 const styles = () => ({
@@ -14,9 +15,15 @@ class Layout extends Component {
     render() {
         const { classes, children } = this.props;
         return (
-            <Grid container className={classes.container}>
-                <Grid item xs={12}> {children} </Grid>
-            </Grid>
+            <Fragment>
+                <Helmet>
+                    <title> Книжный магазин </title>
+                </Helmet>
+
+                <Grid container className={classes.container}>
+                    <Grid item xs={12}> {children} </Grid>
+                </Grid>
+            </Fragment>
         );
     }
 }

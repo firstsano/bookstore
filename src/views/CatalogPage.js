@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import { Paper, Divider } from '@material-ui/core';
+import { Helmet } from "react-helmet";
 
 import Catalog from '~/src/components/Catalog';
 import FavoriteProducts from '~/src/components/FavoriteProducts';
@@ -27,6 +28,10 @@ class CatalogPage extends Component {
 
         return (
             <Fragment>
+                <Helmet>
+                    <title> Каталог </title>
+                </Helmet>
+
                 <Paper className={classes.paper}>
                     <FavoriteProducts />
                 </Paper>

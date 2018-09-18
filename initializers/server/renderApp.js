@@ -9,6 +9,7 @@ import {
     createMuiTheme,
     createGenerateClassName,
 } from '@material-ui/core/styles';
+import { Helmet } from 'react-helmet';
 
 import Layout from '~/src/components/Layout';
 import Header from '~/src/components/Header';
@@ -69,6 +70,7 @@ export default (req, res) => {
         return ({
             content: renderToString(<StyledApp />),
             generatedCss: sheetsRegistry.toString(),
+            helmet: Helmet.renderStatic(),
             initialState: JSON.stringify(store.getState())
         });
     })
